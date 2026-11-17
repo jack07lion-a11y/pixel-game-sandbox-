@@ -1,12 +1,11 @@
 import numpy as np,sys
 from PIL import Image
-S=sys.argv[1];LON0=8.0;LATR=1.3
-im=np.asarray(Image.open(S+'earth_eq.png').convert('RGB')).astype(np.float32)
-# 2x2 o'rtacha -> 360x225
-c=im.reshape(225,2,360,2,3).mean(axis=(1,3))
+S=sys.argv[1];LON0=8.0;LATR=1.3;GX=int(sys.argv[2]) if len(sys.argv)>2 else 360;GY=int(sys.argv[3]) if len(sys.argv)>3 else 225
+im0=Image.open(S+'earth_eq.png').convert('RGB')
+c=np.asarray(im0.resize((GX,GY),Image.BICUBIC)).astype(np.float32)
 r,g,b=c[...,0],c[...,1],c[...,2];mx=c.max(-1);mn=c.min(-1);lum=.3*r+.59*g+.11*b
-lat=np.degrees((.5-(np.arange(225)+.5)/225)*2*LATR)[:,None]*np.ones((1,360))
-lon=(LON0+(np.arange(360)+.5)/360*360)[None,:]*np.ones((225,1));lon=((lon+180)%360)-180
+lat=np.degrees((.5-(np.arange(GY)+.5)/GY)*2*LATR)[:,None]*np.ones((1,GX))
+lon=(LON0+(np.arange(GX)+.5)/GX*360)[None,:]*np.ones((GY,1));lon=((lon+180)%360)-180
 ocean=(b>r+18)&(b>g-12)
 white=(mn>165)&(b-r<30)
 greenl=(lon>-74)&(lon<-11)&(lat>59.5)
@@ -15,7 +14,7 @@ antar=lat<-66.5
 land=~ocean
 land|=white&(greenl|antar|arct)
 ocean&=~(white&(greenl|antar|arct))
-T=np.zeros((225,360),np.uint8)
+T=np.zeros((GY,GX),np.uint8)
 snow=land&(white|((mn>175)&(b-r<32)))
 green=land&~snow&(g>r+11)
 brown=land&~snow&~green&(lum<142)
@@ -38,5 +37,5 @@ T=smooth(T)
 
 np.save(S+'T.npy',T);np.save(S+'lum.npy',lum)
 pal=np.array([[80,150,60],[225,200,130],[240,245,250],[120,100,85],[30,90,170]],np.uint8)
-Image.fromarray(pal[T]).resize((1080,675),Image.NEAREST).save(S+'cls.png')
+Image.fromarray(pal[T]).resize((1140,720),Image.NEAREST).save(S+'cls.png')
 print(np.bincount(T.ravel()))

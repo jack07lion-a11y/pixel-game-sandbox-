@@ -10,7 +10,7 @@ def fill_from(y0,y1,x0,x1,sy0):  # yuqoridagi/yaqin okean qismini nusxalash
     h=y1-y0; im[y0:y1,x0:x1]=im[sy0:sy0+h,x0:x1]
 fill_from(0,100,0,160,110)            # "МИР" sarlavhasi
 def fill_grad(y0,y1,x0,x1):
-    ref=im[y0-6:y0-1,x0:x1].mean(axis=0)  # (w,3)
+    ref=im[y0-70:y0-45,x0:x1].mean(axis=0)  # (w,3)
     ref=np.stack([np.convolve(np.pad(ref[:,c],(40,40),mode='edge'),np.ones(81)/81,mode='valid') for c in range(3)],axis=1)
     for y in range(y0,y1):
         t=(y-y0)/(y1-y0); im[y,x0:x1]=ref*(1-.12*t)

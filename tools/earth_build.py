@@ -1,7 +1,7 @@
 # Yer xaritasi: PMD (T,R,M), okean chuqurligi va tekstura (JPEG) ni tayyorlaydi.
 import numpy as np,sys,base64,io,math,random,json
 from PIL import Image
-S=sys.argv[1];OUT=sys.argv[2];LON0=8.0;LATR=1.3;GX,GY=360,225
+S=sys.argv[1];OUT=sys.argv[2];LON0=8.0;LATR=1.3;GX=int(sys.argv[3]) if len(sys.argv)>3 else 360;GY=int(sys.argv[4]) if len(sys.argv)>4 else 225;SC=GX/360
 T=np.load(S+'T.npy').astype(np.uint8);lum=np.load(S+'lum.npy')
 def cell(lon,lat):
     x=int(((lon-LON0)%360)/360*GX);y=int((.5-math.radians(lat)/(2*LATR))*GY)
@@ -61,12 +61,12 @@ for nm,lo,la in cities:
         x,y=found
     vill.append((x,y,nm))
 # qo'shimcha qishloqlar (quruqlikda, bir-biridan uzoq)
-rnd=random.Random(7);pts=[(v[0],v[1]) for v in vill]
+NV=330 if GX<=360 else 2000;DMIN=36 if GX<=360 else 100;rnd=random.Random(7);pts=[(v[0],v[1]) for v in vill]
 cand=[(x,y) for y in range(GY) for x in range(GX) if T[y,x] in(0,1) and R[y,x]==0 and not(x<30 and y<23) and 8<y<GY-6]
 rnd.shuffle(cand)
 for x,y in cand:
-    if len(pts)>=330:break
-    if all(min(abs(x-a),GX-abs(x-a))**2+(y-b)**2>=36 for a,b in pts):pts.append((x,y))
+    if len(pts)>=NV:break
+    if all(min(abs(x-a),GX-abs(x-a))**2+(y-b)**2>=DMIN for a,b in pts):pts.append((x,y))
 for x,y in pts:M[y,x]=1
 # yo'llar: eng yaqin qishloqlar orasida, faqat quruqlik orqali
 def clear(a,b):
@@ -79,7 +79,7 @@ def dist(a,b):return math.hypot(min(abs(a[0]-b[0]),GX-abs(a[0]-b[0])),a[1]-b[1])
 for i,a in enumerate(pts):
     ds=sorted(((dist(a,b),b) for j,b in enumerate(pts) if j!=i))[:2]
     for d,b in ds:
-        if d<26:
+        if d<26*SC**.7:
             if abs(a[0]-b[0])>GX//2:continue
             if clear(a,b):
                 (x0,y0),(x1,y1)=a,b;n=max(abs(x1-x0),abs(y1-y0),1)
