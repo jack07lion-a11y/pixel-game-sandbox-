@@ -144,6 +144,14 @@ sub("const f=(x,y,c,l,p)=>{const X=ox+x/WW*TW*s,Y=oy+y/WH*TH*s;","const f=(x,y,c
 sub("X=ox+X/WW*TW*s;Y=oy+Y/WH*TH*s;i?gg.lineTo(X,Y):gg.moveTo(X,Y)","X=ox+wLon(X)/6.2831853*TW*s;Y=oy+wFy(Y)*TH*s;i?gg.lineTo(X,Y):gg.moveTo(X,Y)")
 sub('SR:10,A:160,','SR:109.2,A:23455,')
 sub('dayN=Math.max(0,Math.min(1,.5-sunV*1.2));','dayN=Math.max(0,Math.min(1,.5-sunV*1.2));if(dayN>0&&typeof moonLight==="function")dayN*=1-.3*moonLight();if(typeof moonHud==="function")moonHud(dt);')
+
+# ---------- uslub: balandlik pog'onalari, ko'pik, bulutlar ----------
+sub(":rt>0?rgTile(rt,h,sv.v):TL[bi][h%3],X,Y);",":rt>0?rgTile(rt,h,sv.v):(typeof styTile==='function'?styTile(bi,tx,ty,h):TL[bi][h%3]),X,Y);")
+sub("if(o)dmd(X,Y,BCH[bi]+(.4+.12*o)+')')}","if(o)dmd(X,Y,BCH[bi]+(.4+.12*o)+')')}\n      if(!p&&typeof cliffEdge==='function')cliffEdge(tx,ty,X,Y);")
+sub("PMD&&isOc(tx,ty)?'#e6d8a8':'#c9b98a'","PMD&&isOc(tx,ty)?(typeof foamCol==='function'?foamCol():'#e6d8a8'):'#c9b98a'")
+src=src.replace("render();if(typeof cloudDraw==='function')cloudDraw();rgDraw(dt);flyFx(dt);","if(window.VX&&VX.on)voxRender();else{render();if(typeof cloudDraw==='function')cloudDraw()}rgDraw(dt);flyFx(dt);")
+sub("render();rgDraw(dt);flyFx(dt);mmDraw();xDraw(dt);requestAnimationFrame(loop)}","if(window.VX&&VX.on)voxRender();else{render();if(typeof cloudDraw==='function')cloudDraw()}rgDraw(dt);flyFx(dt);mmDraw();xDraw(dt);requestAnimationFrame(loop)}")
+sub("(.05+(hs(tx>>2,ty>>2)&3)*.05)","(.02)")
 # nomlar
 src=src.replace("gMark(HOME[0],HOME[1],'#ffd23a','Biyon')","gMark(HOME[0],HOME[1],'#ffd23a','Dushanbe')").replace("f(HOME[0],HOME[1],'#ffd23a','Biyon')","f(HOME[0],HOME[1],'#ffd23a','Dushanbe')")
 src=src.replace("rzShow('Biyon','Tinch vodiy · uy')","rzShow('Dushanbe','Tojikiston · uy')")

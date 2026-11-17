@@ -56,6 +56,6 @@
     window.OD=OD;window.odl=(tx,ty)=>{const i=pt(tx,ty);return i<0?1:OD[i]};
     const mk=(col,seed)=>{const c=document.createElement('canvas');c.width=32;c.height=16;__paintTile(c,col,'water',seed);return c};
     const C=[['#5cbfc8','#62c5cf'],['#3597c6','#3a9ecc'],['#2467a6','#2870ae'],['#174785','#1a4e8e']];
-    window.WTLD=C.map((a,k)=>a.map((col,i)=>mk(col,120+k*3+i)));
+    window.WTLD=C.map((a,k)=>a.map((col,i)=>mk(a[0],120+k*3+i)));
   }catch(e){console.warn('chuqurlik',e)}
 })();

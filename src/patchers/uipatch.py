@@ -24,6 +24,7 @@ IC={
 'dive':'<path d="M3 11c3-3 6 3 9 0s6 3 9 0M3 17c3-3 6 3 9 0s6 3 9 0"/><path d="M8 6h.01M12 3.5h.01M15.5 6.5h.01" stroke-width="3"/>',
 'up':'<path d="M12 20V5M6 11l6-6 6 6"/>',
 'down':'<path d="M12 4v15M6 13l6 6 6-6"/>',
+'view':'<path d="M3 19l6.5-10.500 4.500 7 2.500-3.500L21 19H3z"/><path d="M17 5.500h.01" stroke-width="4"/>',
 'heart':'<path d="M12 20s-8-4.8-8-10.5A4.5 4.5 0 0112 7a4.5 4.5 0 018 2.5C20 15.2 12 20 12 20z"/>',
 'coin':'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M9.5 10c0-1.5 5 -1.5 5 0s-5 2-5 4 5 1.5 5 0"/>',
 'fist':'<path d="M7 11V7.5a1.5 1.5 0 013 0V10m0-3a1.5 1.5 0 013 0v3m0-2a1.5 1.5 0 013 0v4.5c0 4-2 6-5 6s-5-2-5-5.5V11a1.5 1.5 0 013 0z"/>',
@@ -32,7 +33,7 @@ IC={
 }
 def uri(b):return 'url("data:image/svg+xml,'+urllib.parse.quote(S(b),safe="/:=' ()-,.")+'")'
 css='/*UI-BEGIN*/\n:root{'+''.join('--i-%s:%s;'%(k,uri(v)) for k,v in IC.items())+'}\n'+open(os.path.join(R,'ui.css'),encoding='utf-8').read()+'\n/*UI-END*/'
-js='/*UIJS-BEGIN*/\n'+''.join(open(os.path.join(R,n),encoding='utf-8').read()+'\n' for n in ('ui.js','colors.js','radar.js','space.js'))+'/*UIJS-END*/'
+js='/*UIJS-BEGIN*/\n'+''.join(open(os.path.join(R,n),encoding='utf-8').read()+'\n' for n in ('ui.js','colors.js','style.js','radar.js','space.js','vox.js'))+'/*UIJS-END*/'
 src=open(H,encoding='utf-8').read()
 src=re.sub(r'/\*UI-BEGIN\*/.*?/\*UI-END\*/\n?','',src,flags=re.S)
 src=re.sub(r'/\*UIJS-BEGIN\*/.*?/\*UIJS-END\*/\n?','',src,flags=re.S)

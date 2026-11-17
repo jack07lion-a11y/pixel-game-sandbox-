@@ -3,7 +3,7 @@ import re,os,json
 R=os.path.dirname(os.path.dirname(os.path.abspath(__file__)));H=os.path.join(os.path.dirname(R),'index.html')
 d=json.load(open(os.path.join(R,'earth','earth.json')))
 src=open(H,encoding='utf-8').read()
-src,n=re.subn(r'const MYMAP="[^"]*";(?:\nconst EARTH_OD="[^"]*";\nconst EIMG=new Image\(\);EIMG\.src="[^"]*";)?',lambda m:'const MYMAP="%s";\nconst EARTH_OD="%s";\nconst EIMG=new Image();EIMG.src="data:image/jpeg;base64,%s";'%(d['pm'],d['od'],d['ej']),src,count=1)
+src,n=re.subn(r'const MYMAP="[^"]*";(?:\nconst EARTH_OD="[^"]*";)?(?:\nconst EARTH_EL="[^"]*";)?(?:\nconst EIMG=new Image\(\);EIMG\.src="[^"]*";)?',lambda m:'const MYMAP="%s";\nconst EARTH_OD="%s";\nconst EARTH_EL="%s";\nconst EIMG=new Image();EIMG.src="data:image/jpeg;base64,%s";'%(d['pm'],d['od'],d.get('el',''),d['ej']),src,count=1)
 assert n==1,'MYMAP'
 def sub(old,new):
     global src

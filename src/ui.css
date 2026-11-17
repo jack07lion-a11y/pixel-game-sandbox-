@@ -1,20 +1,20 @@
 /* ===== YANGI UI: shisha (glass) uslubi, SVG ikonkalar ===== */
 :root{--glass:linear-gradient(180deg,rgba(44,54,74,.55),rgba(12,16,26,.6));--ln:rgba(255,255,255,.24);--sh:inset 0 1px 0 rgba(255,255,255,.2),inset 0 -10px 16px rgba(0,0,0,.18),0 4px 12px rgba(0,0,0,.32)}
 /* ikonka tugmalar */
-#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk,#bl,#tf,#fy,#fd,#bd,#sx){position:relative!important;inset:auto!important}
-#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk,#bl,#tf,#fy,#fd,#bd,#sx,#bt,#dv,#uu,#ud){
+#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk,#bl,#tf,#fy,#fd,#bd,#sx,#vx){position:relative!important;inset:auto!important}
+#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk,#bl,#tf,#fy,#fd,#bd,#sx,#vx,#bt,#dv,#uu,#ud){
  font-size:0!important;color:transparent!important;background:var(--glass)!important;border:1.5px solid var(--ln)!important;box-shadow:var(--sh)!important;
  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:0!important;transition:transform .08s,background .15s,border-color .15s;-webkit-tap-highlight-color:transparent}
-#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk){border-radius:30%!important}
+#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk,#vx){border-radius:30%!important}
 #root :is(#bl,#tf,#fy,#fd,#bd,#sx,#bt,#dv,#uu,#ud){border-radius:50%!important}
-#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk,#bl,#tf,#fy,#fd,#bd,#sx,#bt,#dv,#uu,#ud)::before{content:"";position:absolute;inset:0;margin:auto;width:52%;height:52%;background:var(--ac,#fff);
+#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk,#bl,#tf,#fy,#fd,#bd,#sx,#vx,#bt,#dv,#uu,#ud)::before{content:"";position:absolute;inset:0;margin:auto;width:52%;height:52%;background:var(--ac,#fff);
  -webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5))}
-#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk,#bl,#tf,#fy,#fd,#bd,#sx,#bt,#dv,#uu,#ud):active{transform:scale(.9);background:linear-gradient(180deg,rgba(80,96,128,.7),rgba(30,38,58,.7))!important}
+#root :is(#mute,#rn,#mp,#ed0,#bed0,#iv,#tk,#bl,#tf,#fy,#fd,#bd,#sx,#vx,#bt,#dv,#uu,#ud):active{transform:scale(.9);background:linear-gradient(180deg,rgba(80,96,128,.7),rgba(30,38,58,.7))!important}
 #mute{--m:var(--i-snd);--ac:#e8f1ff}#mute[data-off]{--m:var(--i-mute);--ac:#ff8a8a}
 #rn{--m:var(--i-rain);--ac:#9fd4ff}#mp{--m:var(--i-map);--ac:#8fe8b0}#ed0{--m:var(--i-pen);--ac:#ffd86b}#bed0{--m:var(--i-cube);--ac:#ffb35a}
 #iv{--m:var(--i-bag);--ac:#c8a8ff}#tk{--m:var(--i-chat);--ac:#7fe6f5}
 #bl{--m:var(--i-fire);--ac:#ffa045}#tf{--m:var(--i-bolt);--ac:#ffe14d}#fy{--m:var(--i-wing);--ac:#8fd8ff}#fd{--m:var(--i-apple);--ac:#7be08a}
-#bd{--m:var(--i-hammer);--ac:#e8b07a}#sx{--m:var(--i-star);--ac:#ff7f7f}
+#bd{--m:var(--i-hammer);--ac:#e8b07a}#vx{--m:var(--i-view);--ac:#9ff0b0}#vx.on{border-color:#9ff0b0!important;box-shadow:0 0 12px rgba(159,240,176,.55)!important}#sx{--m:var(--i-star);--ac:#ff7f7f}
 #bt{--m:var(--i-boat);--ac:#9fe8ff}#dv{--m:var(--i-dive);--ac:#9fe8ff}#uu{--m:var(--i-up);--ac:#9fe8ff}#ud{--m:var(--i-down);--ac:#9fe8ff}
 /* tugma ostidagi rangli yorug' halqa (har funksiya o'z rangida) */
 #root :is(#bl,#tf,#fy,#fd,#bd,#sx){border-color:color-mix(in srgb,var(--ac) 55%,transparent)!important}
@@ -86,3 +86,6 @@
 #gm .panel .pt{font-weight:700;font-size:12px;color:#ffe27a}
 #gm .panel .px{position:static!important;width:24px!important;height:24px!important;border-radius:50%!important;border:1px solid rgba(160,190,255,.3)!important;background:rgba(40,58,100,.7)!important;color:#cfe0ff;font-size:12px;padding:0}
 #gm .panel .pb{padding:7px 12px 10px}#gm .panel .r{padding:2px 0}#gm .panel .r b{color:#8fc4ff;font-weight:700}
+/* 3D ko'rinish boshqaruvi */
+#vxc{position:absolute;left:calc(var(--sal) + 10px);top:50%;transform:translateY(-50%);flex-direction:column;gap:6px;z-index:6;padding:6px;border-radius:18px;background:rgba(10,14,22,.45);border:1px solid rgba(255,255,255,.14);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#vxc button{width:calc(var(--u)*.62);height:calc(var(--u)*.62);border-radius:50%;border:1px solid rgba(255,255,255,.28);background:linear-gradient(180deg,rgba(44,54,74,.7),rgba(12,16,26,.7));color:#e8f1ff;font-size:calc(var(--u)*.3);padding:0}

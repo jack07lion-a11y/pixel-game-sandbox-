@@ -25,6 +25,9 @@ ocn=np.pad(land,1,mode='constant');near=np.zeros((GY0,GX0),bool)
 for dy in range(3):
     for dx in range(3):near|=ocn[dy:dy+GY0,dx:dx+GX0]
 D=np.where(oc&near,0,D).astype(np.uint8)
+ELg=np.load(S+'relief.npz')['e'];Ew=ELg[np.ix_(grow,gcol)]
+EL=np.where(land,np.clip(np.floor(np.clip(Ew,0,1.0)*12),0,11),0).astype(np.uint8)
+P2=np.pad(EL,1,mode='edge');st2=np.stack([P2[dy:dy+GY0,dx:dx+GX0] for dy in range(3) for dx in range(3)]);EL=np.where(land,np.median(st2,axis=0).astype(np.uint8),0)
 R=np.zeros((GY0,GX0),np.uint8);M=np.zeros((GY0,GX0),np.uint8)
 rivers={'Nil':[(31.2,30.1),(32.5,25),(32.6,19),(33.5,15.5),(32.5,9),(31.5,4),(32,1)],'Amazonka':[(-50,-1.5),(-60,-3.3),(-70,-4),(-75,-4.5)],
 'Missisipi':[(-90,29.2),(-90.5,33),(-90,37),(-91,41),(-93.5,45)],'Volga':[(48,46),(46,50),(44,54),(50,56),(44,57)],'Dunay':[(29.5,45.2),(25,44),(19,45.5),(17,48),(12,48.5)],
@@ -92,6 +95,6 @@ def rle(a):
         o+=bytes([v,l])
     return bytes(o)
 pm='JS1,%d,%d,'%(GX0,GY0)+base64.b64encode(rle(T)+rle(R)+rle(M)).decode()
-od=base64.b64encode(rle(D)).decode();ej=base64.b64encode(open(JPG,'rb').read()).decode()
-json.dump({'pm':pm,'od':od,'ej':ej,'LONF':LONW0/360.0,'LATF':LATF,'cities':[(v[2],v[0],v[1]) for v in vill]},open(OUT,'w'))
-print(len(pm),len(od),len(ej),len(vill),len(pts),np.bincount(R.ravel()),'LONF',LONW0/360.0,'LATF',LATF)
+od=base64.b64encode(rle(D)).decode();el=base64.b64encode(rle(EL)).decode();ej=base64.b64encode(open(JPG,'rb').read()).decode()
+json.dump({'pm':pm,'od':od,'el':el,'ej':ej,'LONF':LONW0/360.0,'LATF':LATF,'cities':[(v[2],v[0],v[1]) for v in vill]},open(OUT,'w'))
+print('el',len(el),len(pm),len(od),len(ej),len(vill),len(pts),np.bincount(R.ravel()),'LONF',LONW0/360.0,'LATF',LATF)
