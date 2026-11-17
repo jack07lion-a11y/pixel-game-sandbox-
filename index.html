@@ -168,6 +168,29 @@ html,body{background:#0d140f}
 #vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,rgba(0,0,0,0) 58%,rgba(6,10,6,.2) 100%)}
 /* radar: yumaloq, shisha hoshiyali */
 #root #mm{width:calc(var(--u)*2.3)!important;height:calc(var(--u)*2.3)!important;border-radius:50%!important;border:2px solid rgba(255,255,255,.4)!important;box-shadow:0 0 0 3px rgba(8,12,20,.45),0 6px 16px rgba(0,0,0,.45)!important;background:#101820!important;opacity:1!important}
+/* ===== Quyosh tizimi ekrani: ikki chekka paneli ===== */
+#gm .rail{position:absolute;top:calc(var(--sat) + 8px);bottom:calc(var(--sab) + 8px);display:flex;flex-direction:column;gap:6px;z-index:6;pointer-events:none}
+#spL{left:calc(var(--sal) + 8px);width:76px}#spR{right:calc(var(--sar) + 8px);width:58px;align-items:flex-end}
+#gm .rail>*{pointer-events:auto}
+#gm .rail .rb{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;align-items:center;gap:5px;padding:7px 5px;border-radius:22px;background:linear-gradient(180deg,rgba(18,28,52,.72),rgba(8,12,26,.72));border:1px solid rgba(160,190,255,.22);box-shadow:0 8px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.12);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);touch-action:pan-y}
+#gm .rail .rb::-webkit-scrollbar{display:none}
+#gm .rail.col .rb{display:none}
+#gm .rail .rc{position:relative!important;right:auto!important;top:auto!important;width:38px!important;height:26px!important;border-radius:13px!important;border:1px solid rgba(160,190,255,.3)!important;background:rgba(14,22,44,.75)!important;color:#cfe0ff;font-size:16px;padding:0}
+#gm #spL .sb{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;width:100%;height:auto;min-height:52px;padding:4px 0 3px;border-radius:14px;border:1px solid transparent;background:transparent;color:#cfe0ff;font:600 9px ui-monospace,monospace;flex:none}
+#gm #spL .sb .ic{width:36px;height:36px;image-rendering:pixelated;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 3px 8px rgba(0,0,0,.5)}
+#gm #spL .sb.on{background:linear-gradient(180deg,rgba(255,214,120,.22),rgba(255,214,120,.08));border-color:rgba(255,214,120,.65);color:#ffe9a8}
+#gm #spL .sb.on .ic{box-shadow:0 0 0 2px #ffd978,0 0 14px rgba(255,214,120,.6)}
+#gm #sp{display:none!important}
+#gm #spR .rb>button,#gm #spR .tb{position:relative!important;right:auto!important;top:auto!important;bottom:auto!important;left:auto!important;width:32px!important;height:32px!important;flex:none;border-radius:50%!important;border:1px solid rgba(160,190,255,.35)!important;background:linear-gradient(180deg,rgba(40,58,100,.8),rgba(14,22,46,.85))!important;color:#e6f0ff;font-size:15px;padding:0;box-shadow:0 3px 8px rgba(0,0,0,.4)}
+#gm #spR .rb>button:active{transform:scale(.92)}
+#gm #spR .tg{display:flex;flex-direction:column;gap:4px;margin-top:4px;padding-top:8px;border-top:1px solid rgba(160,190,255,.18)}
+#gm #spR .tm{position:relative!important;width:36px!important;height:20px!important;border-radius:13px!important;border:1px solid rgba(160,190,255,.3)!important;background:rgba(14,22,44,.8)!important;color:#bcd2ff;font:700 10px ui-monospace,monospace;padding:0}
+#gm #spR .tm.on{background:linear-gradient(180deg,#ffcf6a,#c98a10)!important;color:#2a1a00;border-color:#ffe9a8!important}
+#gm .panel{position:absolute;left:calc(var(--sal) + 94px);top:calc(var(--sat) + 70px);width:min(300px,calc(var(--vw) - 250px));max-height:calc(var(--vh) - 90px);overflow:auto;z-index:5;border-radius:16px;background:linear-gradient(180deg,rgba(14,22,44,.82),rgba(6,10,22,.82));border:1px solid rgba(160,190,255,.25);box-shadow:0 8px 26px rgba(0,0,0,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#d8e6ff;font:11px/1.45 ui-monospace,monospace;scrollbar-width:thin}
+#gm .panel .ph{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px 6px;border-bottom:1px solid rgba(160,190,255,.15)}
+#gm .panel .pt{font-weight:700;font-size:12px;color:#ffe27a}
+#gm .panel .px{position:static!important;width:24px!important;height:24px!important;border-radius:50%!important;border:1px solid rgba(160,190,255,.3)!important;background:rgba(40,58,100,.7)!important;color:#cfe0ff;font-size:12px;padding:0}
+#gm .panel .pb{padding:7px 12px 10px}#gm .panel .r{padding:2px 0}#gm .panel .r b{color:#8fc4ff;font-weight:700}
 
 /*UI-END*/
 </style></head><body><div id="root"><div id="sap"></div>
@@ -3341,7 +3364,8 @@ const GEN={
   const dk=ell(lg+90,lt,0,0,60,14);if(dk<1)col=mixc(col,[92,54,52],(1-dk)*.85);
   let e=ell(lg,lt,0,12,16,16);if(e<1)col=mixc(col,[244,230,212],(1-e)*.95);e=ell(lg-12,lt,0,-4,12,10);if(e<1)col=mixc(col,[240,226,206],(1-e)*.9);
   let cr=crat(x,y,z,12,41,.2)*.5;return[col[0]*(1+cr),col[1]*(1+cr),col[2]*(1+cr)]}};
-const TEXS={};
+const TEXS={};const ORBS={},hexRGB=h=>{const v=parseInt(h.slice(1),16);return[(v>>16)&255,(v>>8)&255,v&255].join(',')};
+const BELT=(()=>{let sd=77;const r=()=>(sd=(sd*1664525+1013904223)>>>0)/4294967296,o=[];for(let i=0;i<900;i++){const a=2.1+r()*1.15,ang=r()*TAU;o.push([a,ang,(r()-.5)*.06*a*AU*.0+(r()-.5)*AU*.12,TAU/(Math.pow(a,1.5)*365.2422)])}return o})();
 function bodyTex(key){let t=TEXS[key];if(t)return t;const w=key=='moon'?512:256,h=w/2,d=new Uint8ClampedArray(w*h*4),f=GEN[key];
   for(let v=0;v<h;v++){const lat=(.5-(v+.5)/h)*Math.PI,cl2=Math.cos(lat),sl=Math.sin(lat);for(let u=0;u<w;u++){const lon=(u+.5)/w*TAU,x=cl2*Math.cos(lon),y=cl2*Math.sin(lon),c=f(lon,lat,x,y,sl),k=(v*w+u)*4;d[k]=c[0];d[k+1]=c[1];d[k+2]=c[2];d[k+3]=255}}
   return TEXS[key]={w,h,d}}
@@ -3403,17 +3427,33 @@ window.drawSpace=function(w,h){
     tv=v=>{const vx=v[0]*ca-v[1]*sa,vy=v[0]*sa+v[1]*ca;return[vx,vy*sE+v[2]*cE,-vy*cE+v[2]*sE]};
   gg.fillStyle='#01030a';gg.fillRect(0,0,w,h);
   STARS.forEach(s=>{gg.fillStyle='rgba(255,255,255,'+(.25+.55*s[2]*(.7+.3*Math.sin(time*2+s[0]*50)))+')';gg.fillRect(s[0]*w|0,s[1]*h|0,s[2]>.8?2:1,s[2]>.8?2:1)});
-  // orbita doiralari (a.b.) va sayyora orbitalari
-  const c0=P3(0,0,0),SRp=S.SR*Z;SP.sun=[c0[0],c0[1],SRp];gg.lineWidth=1;
-  for(const au of [1,2,5,10,20,30]){const rr=au*AU*Z;if(rr>60000||rr<14)continue;gg.strokeStyle='rgba(120,160,255,.07)';gg.beginPath();gg.ellipse(c0[0],c0[1],rr,rr*sE,0,0,6.3);gg.stroke();
-    if(rr<w*1.3&&rr>40){gg.font='10px monospace';gg.fillStyle='rgba(150,180,255,.35)';gg.textAlign='left';gg.fillText(au+' a.b.',c0[0]+rr*.7+4,c0[1]+rr*sE*.7+10)}}
-  PL.forEach(p=>{const n=360/(p.per*365.2422);gg.strokeStyle=p.oc;gg.lineWidth=SP.sel==p.id?1.8:1;gg.beginPath();let first=1;
-    for(let i=0;i<=180;i++){const q=orb(p.a*AU,p.e,p.i,p.Om,p.w,i/180*TAU+(p.L0-p.w)*DEG*0,1),pp=P3(q[0],q[1],q[2]);if(Math.abs(pp[0])>60000&&Math.abs(pp[1])>60000){first=1;continue}first?gg.moveTo(pp[0],pp[1]):gg.lineTo(pp[0],pp[1]);first=0}gg.stroke()});
-  {const v2=S.vx*S.vx+S.vy*S.vy,r=S.r,en=v2/2-S.GM/r,aa=-S.GM/(2*en),rv=S.rx*S.vx+S.ry*S.vy,ex=((v2-S.GM/r)*S.rx-rv*S.vx)/S.GM,ey=((v2-S.GM/r)*S.ry-rv*S.vy)/S.GM,ee=Math.hypot(ex,ey),om=Math.atan2(ey,ex),pp=aa*(1-ee*ee);
-    gg.strokeStyle='rgba(255,215,120,.6)';gg.lineWidth=1.5;gg.beginPath();let f2=1;for(let i=0;i<=200;i++){const nu=i/200*TAU,rr=pp/(1+ee*Math.cos(nu-om)),q=P3(rr*Math.cos(nu),rr*Math.sin(nu),0);if(Math.abs(q[0])>60000){f2=1;continue}f2?gg.moveTo(q[0],q[1]):gg.lineTo(q[0],q[1]);f2=0}gg.stroke()}
-  // Oy orbitasi (Yer atrofida)
-  {const ec=bm.earth,d=days(),L0=218.316,wp=83.353+.11140353*d,Om=125.045-.05295377*d;gg.strokeStyle='rgba(200,200,215,.35)';gg.lineWidth=1;gg.beginPath();let f3=1;
-    for(let i=0;i<=120;i++){const q=orb(MOON.a,MOON.e,MOON.i,Om,wp,i/120*TAU,1),pp=P3(ec.p[0]+q[0],ec.p[1]+q[1],q[2]);if(Math.abs(pp[0])>60000||Math.abs(pp[1])>60000){f3=1;continue}f3?gg.moveTo(pp[0],pp[1]):gg.lineTo(pp[0],pp[1]);f3=0}gg.stroke()}
+  const c0=P3(0,0,0),SRp=S.SR*Z;SP.sun=[c0[0],c0[1],SRp];
+  // ekliptika tekisligi: yengil gradient disk (chuqurlik hissi)
+  {const R30=30*AU*Z;if(R30>30&&R30<30000){gg.save();gg.translate(c0[0],c0[1]);gg.scale(1,sE);const g=gg.createRadialGradient(0,0,0,0,0,R30);g.addColorStop(0,'rgba(96,136,255,.12)');g.addColorStop(.45,'rgba(70,104,230,.05)');g.addColorStop(1,'rgba(60,90,210,0)');gg.fillStyle=g;gg.beginPath();gg.arc(0,0,R30,0,TAU);gg.fill();gg.restore()}}
+  // a.b. doiralari (nuqtali) va yozuvlari
+  gg.lineWidth=1;gg.setLineDash([2,7]);
+  for(const au of [1,2,5,10,20,30]){const rr=au*AU*Z;if(rr>60000||rr<14)continue;gg.strokeStyle='rgba(150,180,255,.20)';gg.beginPath();gg.ellipse(c0[0],c0[1],rr,rr*sE,0,0,6.3);gg.stroke()}
+  gg.setLineDash([]);
+  for(const au of [1,2,5,10,20,30]){const rr=au*AU*Z;if(rr>14&&rr<w*1.3&&rr>40){gg.font='10px monospace';gg.fillStyle='rgba(160,190,255,.45)';gg.textAlign='left';gg.fillText(au+' a.b.',c0[0]+rr*.7+4,c0[1]+rr*sE*.7+10)}}
+  // asteroid kamari (Mars va Yupiter orasi)
+  if(2.2*AU*Z>10){const d0=days();gg.fillStyle='rgba(190,170,140,.55)';const big=Z*AU>40?2:1;
+    for(let i=0;i<BELT.length;i++){const b=BELT[i],ag=b[1]+b[3]*d0-1.5708,x=b[0]*AU*Math.cos(ag),y=b[0]*AU*Math.sin(ag),q=P3(x,y,b[2]);if(q[0]<-4||q[0]>w+4||q[1]<-4||q[1]>h+4)continue;gg.fillRect(q[0],q[1],big,big)}}
+  // sayyora orbitalari: orqa yarmi xira, old yarmi yorqin va yarqiraydi; ortida iz (komet dumi)
+  PL.forEach(p=>{const pts=ORBS[p.id]||(ORBS[p.id]=Array.from({length:241},(_,i)=>orb(p.a*AU,p.e,p.i,p.Om,p.w,i/240*TAU,1)));
+    const pp=pts.map(q=>P3(q[0],q[1],q[2])),bk=pts.map(q=>((q[0]-SP.cx)*sa+(q[1]-SP.cy)*ca)>0),rgb=hexRGB(p.col),sel=SP.sel==p.id;
+    if(pp.every(q=>Math.abs(q[0])>1e5||Math.abs(q[1])>1e5))return;
+    for(const pass of [0,1]){gg.beginPath();for(let i=1;i<pp.length;i++){if(bk[i]===(pass==0)&&bk[i-1]===bk[i]){gg.moveTo(pp[i-1][0],pp[i-1][1]);gg.lineTo(pp[i][0],pp[i][1])}}
+      gg.lineWidth=pass?(sel?2.2:1.4):1;gg.strokeStyle='rgba('+rgb+','+(pass?(sel?.9:.55):.16)+')';if(pass){gg.shadowColor='rgba('+rgb+',.9)';gg.shadowBlur=sel?9:5}gg.stroke();gg.shadowBlur=0}
+    {const n=360/(p.per*365.2422),M0=(p.L0-p.w+n*days())*DEG,dm=Math.min(.09,.5/Math.max(1,(p.a*AU*Z)/60+1));let prev=null;
+      for(let k=0;k<=34;k++){const q=orb(p.a*AU,p.e,p.i,p.Om,p.w,M0-k*dm,1),sp2=P3(q[0],q[1],q[2]);if(prev&&Math.abs(sp2[0])<1e5){gg.strokeStyle='rgba('+rgb+','+((1-k/34)*.85).toFixed(3)+')';gg.lineWidth=2.4*(1-k/40);gg.beginPath();gg.moveTo(prev[0],prev[1]);gg.lineTo(sp2[0],sp2[1]);gg.stroke()}prev=sp2}}});
+  {const v2=S.vx*S.vx+S.vy*S.vy,r=S.r,en=v2/2-S.GM/r,aa=-S.GM/(2*en),rv=S.rx*S.vx+S.ry*S.vy,ex=((v2-S.GM/r)*S.rx-rv*S.vx)/S.GM,ey=((v2-S.GM/r)*S.ry-rv*S.vy)/S.GM,ee=Math.hypot(ex,ey),om=Math.atan2(ey,ex),pp=aa*(1-ee*ee),sel=SP.sel=='earth';
+    const pts=[];for(let i=0;i<=200;i++){const nu=i/200*TAU,rr=pp/(1+ee*Math.cos(nu-om));pts.push([rr*Math.cos(nu),rr*Math.sin(nu),0])}
+    const sc=pts.map(q=>P3(q[0],q[1],q[2])),bk=pts.map(q=>((q[0]-SP.cx)*sa+(q[1]-SP.cy)*ca)>0);
+    for(const pass of [0,1]){gg.beginPath();for(let i=1;i<sc.length;i++){if(bk[i]===(pass==0)&&bk[i-1]===bk[i]&&Math.abs(sc[i][0])<1e5){gg.moveTo(sc[i-1][0],sc[i-1][1]);gg.lineTo(sc[i][0],sc[i][1])}}
+      gg.lineWidth=pass?(sel?2.4:1.7):1.1;gg.strokeStyle=pass?'rgba(255,214,120,'+(sel?.95:.7)+')':'rgba(255,214,120,.2)';if(pass){gg.shadowColor='rgba(255,200,90,.9)';gg.shadowBlur=7}gg.stroke();gg.shadowBlur=0}}
+  // Oy orbitasi (Yer atrofida): nuqtali, iz bilan
+  {const ec=bm.earth,d=days(),wp=83.353+.11140353*d,Om=125.045-.05295377*d;gg.strokeStyle='rgba(210,214,230,.42)';gg.lineWidth=1;gg.setLineDash([3,4]);gg.beginPath();let f3=1;
+    for(let i=0;i<=120;i++){const q=orb(MOON.a,MOON.e,MOON.i,Om,wp,i/120*TAU,1),pp=P3(ec.p[0]+q[0],ec.p[1]+q[1],q[2]);if(Math.abs(pp[0])>60000||Math.abs(pp[1])>60000){f3=1;continue}f3?gg.moveTo(pp[0],pp[1]):gg.lineTo(pp[0],pp[1]);f3=0}gg.stroke();gg.setLineDash([])}
   // tartib: uzoqdan yaqinga
   const view=bl.map(b=>{const sc=P3(b.p[0],b.p[1],b.p[2]),dx=b.p[0]-SP.cx,dy=b.p[1]-SP.cy;return{b,sc,dp:-(dx*sa+dy*ca)*cE+b.p[2]*sE,Rp:b.R*Z}});view.sort((p,q)=>p.dp-q.dp);SP.hits=[];
   const lab=(b,x,y,Rp)=>{gg.font=(SP.sel==b.id?'bold 12px':'11px')+' monospace';gg.textAlign='left';const t=(b.id=='sun'?'☀ ':b.id=='earth'?'🌍 ':b.id=='moon'?'🌙 ':'')+b.n;gg.fillStyle='#000';gg.fillText(t,x+Math.max(Rp,3)+9,y-Math.max(Rp,3)*.3+1);gg.fillStyle=SP.sel==b.id?'#ffe27a':'#cfe4ff';gg.fillText(t,x+Math.max(Rp,3)+8,y-Math.max(Rp,3)*.3)};
@@ -3454,15 +3494,15 @@ window.drawSpace=function(w,h){
     gg.drawImage(cv,x-R,y-R,R*2,R*2);
     if(b.pl&&b.pl.ring)ring(gg,x,y,R,b.pl.ring,A,Lv,1);
     if(b.id=='moon'||R<90)lab(b,x,y,R)});
-  // ma'lumot
+  // tanlangan jism belgisi (ringcha)
+  {const hs=SP.hits.find(q=>q.id==SP.sel);if(hs&&hs.x>-50&&hs.x<w+50&&hs.y>-50&&hs.y<h+50){const rr=hs.r+7+2*Math.sin(time*4);gg.save();gg.translate(hs.x,hs.y);gg.rotate(time*.6);gg.strokeStyle='rgba(255,226,122,.9)';gg.lineWidth=1.6;gg.setLineDash([6,5]);gg.beginPath();gg.arc(0,0,rr,0,TAU);gg.stroke();gg.restore()}}
+  // sarlavha (markazda, ixcham)
   const v=Math.hypot(S.vx,S.vy),vc=Math.sqrt(S.GM/S.A),dKm=S.r/S.A*149.6,vKm=29.78*v/vc,mi=moonInfo();
-  gg.textAlign='left';gg.font='bold 13px monospace';gg.fillStyle='#fff';gg.fillText('QUYOSH TIZIMI · haqiqiy nisbatlar',14,24);
-  gg.font='12px monospace';gg.fillStyle='#ffd98a';gg.fillText('Sana: '+solDate()+' · fasl (shimol): '+solSeason()+' · Oy: '+mi.ph+' '+Math.round(mi.k*100)+'%',14,43);
-  gg.fillStyle='#bcd';gg.fillText('Yer–Quyosh: '+dKm.toFixed(1)+' mln km (o‘yinda '+fmt(dKm*1e6*KS)+' km) · '+vKm.toFixed(1)+' km/s · masshtab 1:'+(1/KS).toFixed(1),14,60);
-  gg.fillText('1 kun = '+S.DAY+' s · 1 yil = '+(S.YEAR/60)+' daq (Oy 1 oyligi = '+Math.round(29.53/365.2422*S.YEAR)+' s) · tezlik ×'+SP.ts,14,77);
-  const inf=info(SP.sel||'earth');if(inf.length){const x0=14,y0=92,lh=15,wd=Math.min(w-110,560);gg.fillStyle='rgba(6,12,24,.62)';gg.fillRect(x0-6,y0-12,wd,lh*inf.length+10);gg.strokeStyle='rgba(255,255,255,.2)';gg.strokeRect(x0-6,y0-12,wd,lh*inf.length+10);
-    inf.forEach((t,i)=>{gg.font=(i?'11px':'bold 12px')+' monospace';gg.fillStyle=i?'#cfe0f4':'#ffe27a';gg.fillText(t,x0,y0+i*lh)})}
-  gg.fillStyle='#8fa';gg.font='12px monospace';gg.fillText('Ekranni siljiting · iki barmoq bilan kattalashtiring · jismni bosing',14,h-70)};
+  gg.textAlign='center';gg.font='bold 13px monospace';gg.fillStyle='#fff';gg.fillText('QUYOSH TIZIMI',w/2,22);
+  gg.font='11px monospace';gg.fillStyle='#ffd98a';gg.fillText(solDate()+' · '+solSeason()+' · Oy: '+mi.ph+' '+Math.round(mi.k*100)+'%',w/2,38);
+  gg.fillStyle='#9fc4ff';gg.fillText('Yer–Quyosh '+dKm.toFixed(1)+' mln km (o‘yinda '+fmt(dKm*1e6*KS)+' km) · tezlik ×'+SP.ts+' · 1 yil = '+(S.YEAR/60)+' daq',w/2,53);
+  gg.fillStyle='rgba(143,255,170,.7)';gg.font='11px monospace';gg.fillText('siljiting · chimdib kattalashtiring · jismni bosing',w/2,h-10);
+  if(window.spInfoUpdate)spInfoUpdate()};
 // Saturn / Uran halqalari (orqa yoki old yarmi)
 function ring(g,x,y,R,bands,A,Lv,front){let u=[1,0,0];if(Math.abs(A[0])>.9)u=[0,1,0];let e=[A[1]*u[2]-A[2]*u[1],A[2]*u[0]-A[0]*u[2],A[0]*u[1]-A[1]*u[0]];const ln=Math.hypot(e[0],e[1],e[2]);e=[e[0]/ln,e[1]/ln,e[2]/ln];
   const f=[A[1]*e[2]-A[2]*e[1],A[2]*e[0]-A[0]*e[2],A[0]*e[1]-A[1]*e[0]];const lit=Math.max(.35,Math.min(1,.5+.5*(A[0]*Lv[0]+A[1]*Lv[1]+A[2]*Lv[2])*Math.sign(A[2]||1)));
@@ -3475,13 +3515,50 @@ function ring(g,x,y,R,bands,A,Lv,front){let u=[1,0,0];if(Math.abs(A[0])>.9)u=[0,
 gc.addEventListener('pointerdown',e=>{SP.pd=[e.clientX,e.clientY]});
 gc.addEventListener('click',e=>{if(gMode!=2)return;const X=e.clientX,Y=e.clientY;if(SP.pd&&Math.hypot(X-SP.pd[0],Y-SP.pd[1])>8)return;
   let best=null,bd=1e9;SP.hits.forEach(h=>{const d=Math.hypot(X-h.x,Y-h.y);if(d<h.r+8&&d<bd){bd=d;best=h}});if(best)focusTo(best.id)});
-// tugmalar: Oy, sayyoralar, tizim, vaqt
-(function(){const sp=document.getElementById('sp');if(!sp||document.getElementById('spM'))return;
-  const mk=(id,txt,fn,cls)=>{const b=document.createElement('button');b.id=id;b.textContent=txt;b.onpointerdown=e=>{e.stopPropagation();e.preventDefault();fn()};sp.insertBefore(b,sp.firstChild?document.querySelector('#sp [data-ts]'):null);return b};
-  const row=[['spM','🌙 Oy','moon'],['spMe','☿ Merkuriy','mercury'],['spV','♀ Venera','venus'],['spMa','♂ Mars','mars'],['spJ','♃ Yupiter','jupiter'],['spSa','♄ Saturn','saturn'],['spU','⛢ Uran','uranus'],['spN','♆ Neptun','neptune'],['spP','♇ Pluton','pluto'],['spSys','🌌 Tizim','sys']];
-  const first=document.querySelector('#sp [data-ts]');row.forEach(([id,t,k])=>{const b=document.createElement('button');b.id=id;b.textContent=t;b.onpointerdown=e=>{e.stopPropagation();e.preventDefault();focusTo(k)};sp.insertBefore(b,first)});
-  [[4000,'×4000'],[40000,'×40000']].forEach(([v,t])=>{const b=document.createElement('button');b.dataset.ts=v;b.textContent=t;b.onpointerdown=e=>{e.stopPropagation();e.preventDefault();SP.ts=v;sp.querySelectorAll('[data-ts]').forEach(x=>x.classList.toggle('on',x===b))};sp.appendChild(b)});
-  const sel=document.getElementById('spS');if(sel)sel.onpointerdown=e=>{e.stopPropagation();e.preventDefault();focusTo(2)}})();
+// ====== YANGI UI: ikki chekka paneli (rail) + ma'lumot kartochkasi ======
+GEN.earthi=(lon,lat,x,y,z)=>{const n=fb(x*3,y*3,z*3,4,5);let c=[34,96,190];if(n>.54)c=mixc([66,160,76],[130,150,84],cl((n-.54)*5,0,1));if(Math.abs(lat)>1.25)c=[240,246,252];return c};
+function iconFor(id){const c=document.createElement('canvas');c.width=c.height=18;const g=c.getContext('2d');g.imageSmoothingEnabled=false;
+  const Lc=[-.5,.55,.68],ln=Math.hypot(...Lc),L=[Lc[0]/ln,Lc[1]/ln,Lc[2]/ln],A=[0,1,0],M=[0,0,1],E=[1,0,0];
+  if(id=='sun'){const gr=g.createRadialGradient(9,9,1,9,9,9);gr.addColorStop(0,'#fff6c0');gr.addColorStop(.55,'#ffb830');gr.addColorStop(1,'rgba(255,120,20,0)');g.fillStyle=gr;g.fillRect(0,0,18,18);return c}
+  if(id=='sys'){g.strokeStyle='rgba(150,190,255,.8)';g.lineWidth=1;[3.5,6,8.2].forEach(r=>{g.beginPath();g.ellipse(9,9,r,r*.5,0,0,6.3);g.stroke()});g.fillStyle='#ffd24a';g.fillRect(8,8,2,2);g.fillStyle='#7fd0ff';g.fillRect(13,7,2,2);g.fillStyle='#ff9a6a';g.fillRect(4,11,2,2);return c}
+  const key=id=='earth'?'earthi':id,tex=bodyTex(key);const cv=sphere(18,tex,A,M,E,L,.2,0);g.drawImage(cv,0,0);
+  if(id=='saturn'){g.strokeStyle='rgba(235,215,160,.9)';g.lineWidth=1;g.beginPath();g.ellipse(9,9.5,8.6,2.6,-.35,0,6.3);g.stroke()}
+  return c}
+function spBuildUI(){const gm=document.getElementById('gm');if(!gm||document.getElementById('spL'))return;
+  const mkEl=(t,id,cls,par)=>{const e=document.createElement(t);if(id)e.id=id;if(cls)e.className=cls;(par||gm).appendChild(e);return e};
+  const L=mkEl('div','spL','rail'),R=mkEl('div','spR','rail');
+  // chap rail: jismlar
+  const hdL=mkEl('button','spLc','rc',L);hdL.textContent='‹';hdL.title='Yig‘ish';hdL.onpointerdown=e=>{e.stopPropagation();e.preventDefault();L.classList.toggle('col');hdL.textContent=L.classList.contains('col')?'›':'‹'};
+  const body=mkEl('div','spLb','rb',L);
+  const list=[['sun','Quyosh'],['mercury','Merkuriy'],['venus','Venera'],['earth','Yer'],['moon','Oy'],['mars','Mars'],['jupiter','Yupiter'],['saturn','Saturn'],['uranus','Uran'],['neptune','Neptun'],['pluto','Pluton'],['sys','Tizim']];
+  list.forEach(([id,n])=>{const b=mkEl('button','sb_'+id,'sb',body);b.dataset.id=id;const ic=iconFor(id);ic.className='ic';b.appendChild(ic);const sp=document.createElement('span');sp.textContent=n;b.appendChild(sp);b.onpointerdown=e=>{e.stopPropagation();e.preventDefault();focusTo(id)}});
+  // o'ng rail: asboblar
+  const hdR=mkEl('button','spRc','rc',R);hdR.textContent='›';hdR.onpointerdown=e=>{e.stopPropagation();e.preventDefault();R.classList.toggle('col');hdR.textContent=R.classList.contains('col')?'‹':'›'};
+  const rb=mkEl('div','spRb','rb',R);
+  ['gx','gs','gsun'].forEach(id=>{const b=document.getElementById(id);if(b)rb.appendChild(b)});
+  const info=mkEl('button','spInfoB','tb',rb);info.textContent='ℹ';info.title='Ma’lumot';info.onpointerdown=e=>{e.stopPropagation();e.preventDefault();SP.infoOn=!SP.infoOn;SP._lastSel=null;spInfoUpdate(true)};
+  ['gp','gq'].forEach(id=>{const b=document.getElementById(id);if(b)rb.appendChild(b)});
+  const tg=mkEl('div','spT','tg',rb);
+  [[1,'×1'],[40,'×40'],[400,'×400'],[4000,'×4k'],[40000,'×40k']].forEach(([v,t])=>{const b=mkEl('button',null,'tm',tg);b.dataset.ts=v;b.textContent=t;b.onpointerdown=e=>{e.stopPropagation();e.preventDefault();SP.ts=v;tg.querySelectorAll('.tm').forEach(x=>x.classList.toggle('on',x===b))};if(v==1)b.classList.add('on')});
+  const old=document.getElementById('sp');if(old)old.style.display='none';
+  // ma'lumot kartochkasi
+  const P=mkEl('div','spI','panel',gm);P.innerHTML='<div class="ph"><span class="pt"></span><button class="px">✕</button></div><div class="pb"></div>';
+  P.querySelector('.px').onpointerdown=e=>{e.stopPropagation();e.preventDefault();SP.infoOn=false;P.style.display='none'};
+  [L,R,P].forEach(el=>{el.onpointerdown=e=>e.stopPropagation();el.onwheel=e=>e.stopPropagation()});
+  SP.infoOn=true;spShow(false)}
+function spShow(on){['spL','spI'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display=on?'':'none'});const t=document.getElementById('spT'),i=document.getElementById('spInfoB');if(t)t.style.display=on?'':'none';if(i)i.style.display=on?'':'none';
+  const gm=document.getElementById('gm');if(gm)gm.classList.toggle('space',!!on)}
+window.spInfoUpdate=function(force){const id=SP.sel||'earth',P=document.getElementById('spI');if(!P||gMode!=2)return;
+  const now=time;if(!force&&SP._lastSel===id&&now-(SP._iu||0)<.5)return;SP._iu=now;
+  document.querySelectorAll('#spL .sb').forEach(b=>b.classList.toggle('on',b.dataset.id===id));
+  if(!SP.infoOn||id==='sys'){P.style.display='none';return}P.style.display='';
+  const inf=info(id==='sys'?'sun':id),nm=(inf[0]||'').split(' · ')[0];
+  if(id==='sys'){P.querySelector('.pt').textContent='Quyosh tizimi';P.querySelector('.pb').innerHTML='<div class="r">Qadam-baqadam: tugmalar chap chetda. Sayyorani bosing yoki chapdagi ro‘yxatdan tanlang.</div><div class="r"><b>Masshtab:</b> 1 : '+(1/KS).toFixed(1)+' (Yer maydoni 510 600 km²)</div><div class="r"><b>Vaqt:</b> 1 kun = '+S.DAY+' s · 1 yil = '+(S.YEAR/60)+' daqiqa</div>';return}
+  P.querySelector('.pt').textContent=inf[0]||'';
+  P.querySelector('.pb').innerHTML=inf.slice(1).map(t=>{const k=t.indexOf(':');return k>0&&k<26?'<div class="r"><b>'+t.slice(0,k+1)+'</b>'+t.slice(k+1)+'</div>':'<div class="r">'+t+'</div>'}).join('')};
+spBuildUI();
+{const so=setMode;window.setMode=function(m){so(m);spShow(m==2);if(m==2)spInfoUpdate(true)}}
+if(!window.focusTo0){window.focusTo0=window.focusTo;window.focusTo=function(k,z){window.focusTo0(k,z);SP._lastSel=null}}
 
 // --- o'yin ichida: Oy fazasi (HUD) va oy yorug'ligi ---
 window.moonLight=function(){const mi=moonInfo(),d=days(),mv=moonVec(d),ml=Math.hypot(mv[0],mv[1],mv[2]),phi=wLat(P.y),lam=wLon(P.x),cp=Math.cos(phi),sl=Math.sin(phi),cl2=Math.cos(lam),sl2=Math.sin(lam);
