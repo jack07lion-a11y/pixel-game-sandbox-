@@ -40,3 +40,9 @@
 - Dunyo endi Yer: qit'alar, okean chuqurligi (4 daraja), relyef. Manba — fizik xarita rasmi. Asboblar: `tools/earth_tex.py` (Miller → ekvirectangular tekstura), `tools/earth_cls.py` (sinflash), `tools/earth_build.py` (PMD, daryo, yo'l, shahar, chuqurlik, JPEG) → `src/earth/earth.json` → `src/patchers/earthpatch.py` index.html ga joylaydi.
 - Uy vodiysi (`tx<60,ty<45`) protsedurali va Skandinaviya ustida (LON0=8°E). Globus teksturasi — rasm (`EIMG`), o'yin plitkalari — PMD.
 - UI: `src/ui.css`, `ui.js`, `colors.js` (plitka teksturasi + chuqurlik), `radar.js` (GTA radar), `patchers/uipatch.py`.
+
+## Dunyo v2 (510 600 km², Душанбе, Quyosh tizimi)
+- Dunyo 78×64 hujayra (74 880×46 080 px), maydon yozuvi 510 600 km² (haqiqiy 510,1 mln ning ~1/1000, chiziqli masshtab 1:31,6). Xarita yarim aniqlikda (1170×720) saqlanadi, JS (`upEarth`) 2× silliq kattalashtiradi.
+- Uy (HOME) = Душанбе (38,56°N 68,79°E): xarita aylantirilgan; `LONF/LATF`, `wLon/wLat/wFy` (worldpatch) — o'yin koordinatalari ↔ haqiqiy kenglik/uzunlik. Globus teksturasi geografik, tekis xarita ham geografik.
+- Asboblar: `tools/earth_tex.py` → `earth_geo.py` → `earth_render.py` (toza relyef) → `earth_world.py` → `src/earth/earth.json`; patcherlar: `earthpatch.py`, `worldpatch.py` (+ tezlik: keshlar, A* oynasi, siyrak to'qnashuv to'ri, pw/pt sinus jadvallari), `uipatch.py`.
+- `src/space.js`: Quyosh tizimi haqiqiy nisbatlarda (Yer radiusi=1; 1 a.b.=23 455; Quyosh 109,2; Oy 60,27), Oy (fazalar, yaqin tomon Yerga qaragan), 8 sayyora + Pluton (Kepler elementlari J2000), Yupiter/Saturn yo'ldoshlari, Saturn/Uran halqalari, fizika kartochkasi, vaqt tezligi ×40000; HUDda Oy fazasi, tungi oy yorug'ligi (`moonLight`).
