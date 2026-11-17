@@ -7,3 +7,4 @@
 - `main` ga push qilsang, Pages avtomatik yangilanadi: https://jack07lion-a11y.github.io/pixel-game-sandbox-/
 - BIRINCHI VAZIFA: o'yinni Билолбек xohishi bilan tahrirlashni davom ettirish. Avval undan nima o'zgartirishni so'ra; o'zing reja tuzma.
 - PWA/APK (Capacitor + GitHub Actions) keyinroq, faqat u so'raganda.
+- ДОИМИЙ ҚОИДА (Билолбек буюрган): ҲАР жавобнинг ОХИРИДА, Билолбек нима деб ёзишидан қатъи назар, ўйинни ўйнаш ҳаволасини ташла: https://jack07lion-a11y.github.io/pixel-game-sandbox-/ . Агар ўзгаришлар ҳали `main` га чиқарилмаган бўлса, ҳавола эски версияни кўрсатишини бир қатор билан огоҳлантир.
