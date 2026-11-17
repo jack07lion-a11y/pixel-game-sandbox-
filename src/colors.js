@@ -48,7 +48,11 @@
 // ---------- okean chuqurligi: sayoz -> chuqur 4 daraja ----------
 (function(){
   try{
-    const raw=atob(EARTH_OD),OD=new Uint8Array(GX*GY);let p=0;for(let i=0;i+1<raw.length&&p<OD.length;i+=2){const v=raw.charCodeAt(i),n=raw.charCodeAt(i+1);for(let k=0;k<n&&p<OD.length;k++)OD[p++]=v}
+    const raw=atob(EARTH_OD),a=GX>>1,b=GY>>1,H=new Uint8Array(a*b);let p=0;for(let i=0;i+1<raw.length&&p<H.length;i+=2){const v=raw.charCodeAt(i),n=raw.charCodeAt(i+1);for(let k=0;k<n&&p<H.length;k++)H[p++]=v}
+    const OD=new Uint8Array(GX*GY);
+    for(let Y=0;Y<GY;Y++){const fy=(Y+.5)/2-.5,fl=Math.floor(fy),wy=fy-fl,y0=fl<0?0:fl,y1=Math.min(b-1,fl+1);
+      for(let X=0;X<GX;X++){const fx=(X+.5)/2-.5,f0=Math.floor(fx),wx=fx-f0,x0=((f0%a)+a)%a,x1=(x0+1)%a;
+        OD[Y*GX+X]=Math.round((H[y0*a+x0]*(1-wx)+H[y0*a+x1]*wx)*(1-wy)+(H[y1*a+x0]*(1-wx)+H[y1*a+x1]*wx)*wy)}}
     window.OD=OD;window.odl=(tx,ty)=>{const i=pt(tx,ty);return i<0?1:OD[i]};
     const mk=(col,seed)=>{const c=document.createElement('canvas');c.width=32;c.height=16;__paintTile(c,col,'water',seed);return c};
     const C=[['#5cbfc8','#62c5cf'],['#3597c6','#3a9ecc'],['#2467a6','#2870ae'],['#174785','#1a4e8e']];
