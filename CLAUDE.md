@@ -7,4 +7,4 @@
 - `main` ga push qilsang, Pages avtomatik yangilanadi: https://jack07lion-a11y.github.io/pixel-game-sandbox-/
 - BIRINCHI VAZIFA: o'yinni Билолбек xohishi bilan tahrirlashni davom ettirish. Avval undan nima o'zgartirishni so'ra; o'zing reja tuzma.
 - PWA/APK (Capacitor + GitHub Actions) keyinroq, faqat u so'raganda.
-- ДОИМИЙ ҚОИДА (Билолбек буюрган): ўйин ўзгарса, `index.html` ни Artifact га ЯНГИЛА (бир хил ҳавола, `url` билан: https://claude.ai/artifact/U7LtJjVxJmmum5bh7JdpPd) ва ҲАР жавобнинг ОХИРИДА шу артефакт ҳаволасини (интерактив охирги версия) ташла. GitHub Pages ҳаволасини ташлама.
+- ДОИМИЙ ҚОИДА (Билолбек буюрган): ўйин ўзгарса, `index.html` ни Artifact га ЯНГИЛА (бир хил ҳавола, `url` билан: https://claude.ai/artifact/U7LtJjVxJmmum5bh7JdpPd) ва ҲАР жавобнинг ОХИРИДА шу артефакт ҳаволасини (интерактив охирги версия) ташла. GitHub Pages ҳаволасини ташлама. Янгилагандан кейин ҲАР ўзгарган жой учун АЛОҲИДА скриншот ташла (нечта жой ўзгарса, шунча): битта расмда ёнма-ён — чапда АВВАЛГИ версия, ўнгда ЯНГИ версия (Playwright билан олиб, PIL билан бирлаштир). Скриншотлар сонидан ортиқча ташлама.
