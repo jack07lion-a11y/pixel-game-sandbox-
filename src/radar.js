@@ -12,7 +12,7 @@
     if(isW(tx,ty)){
       if(isBr(tx,ty))c=[150,105,62];
       else if(bi==2||FZ[ty]==1)c=[200,226,238];
-      else if(isOc(tx,ty)){let e=0;if(!isW(tx+3,ty)||!isW(tx-3,ty)||!isW(tx,ty+3)||!isW(tx,ty-3))e=1;c=e?[58,138,176]:[26,82,140]}
+      else if(isOc(tx,ty)){c=typeof odl==='function'?[[92,191,200],[53,151,198],[36,103,166],[23,71,133]][odl(tx,ty)]:[26,82,140]}
       else c=[52,126,176]}
     else if(isP(tx,ty))c=parse(PA[bi]);
     else{c=parse(rzMM(GR[bi],tx,ty));if(SNA[ty]>.3&&bi!=2){const a=SNA[ty];c=[c[0]*(1-a)+240*a,c[1]*(1-a)+245*a,c[2]*(1-a)+250*a]}}

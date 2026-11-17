@@ -35,3 +35,8 @@
 
 ## Янги чатда
 «pixel-game репозиторийни улаб, HANDOFF.md ни ўқи ва давом эт».
+
+## Yer xaritasi (haqiqiy dunyo)
+- Dunyo endi Yer: qit'alar, okean chuqurligi (4 daraja), relyef. Manba — fizik xarita rasmi. Asboblar: `tools/earth_tex.py` (Miller → ekvirectangular tekstura), `tools/earth_cls.py` (sinflash), `tools/earth_build.py` (PMD, daryo, yo'l, shahar, chuqurlik, JPEG) → `src/earth/earth.json` → `src/patchers/earthpatch.py` index.html ga joylaydi.
+- Uy vodiysi (`tx<60,ty<45`) protsedurali va Skandinaviya ustida (LON0=8°E). Globus teksturasi — rasm (`EIMG`), o'yin plitkalari — PMD.
+- UI: `src/ui.css`, `ui.js`, `colors.js` (plitka teksturasi + chuqurlik), `radar.js` (GTA radar), `patchers/uipatch.py`.

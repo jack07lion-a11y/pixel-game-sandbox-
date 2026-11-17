@@ -31,6 +31,7 @@
     else if(kind=='water'){const lt=mul(c,1.35),dk=mul(c,.82);
       for(let i=0;i<5;i++){const p=pick();dot(p,lt,2,1);dot([p[0]+1,p[1]+1],dk,2,1)}}
     else if(kind=='ice'){const bl=mix(c,[130,180,220],.5);for(let i=0;i<5;i++)dot(pick(),bl,2,1);for(let i=0;i<4;i++)dot(pick(),'#ffffff')}}
+  window.__paintTile=paint;
   // yangi, tabiiy palitra (o't, qum, qor, tosh)
   const G=[['#4e9a36','#58a43f','#489030'],['#dcc48c','#d5bc83','#e2cd98'],['#eef3f8','#e5edf4','#f5f9fc'],['#7e7f86','#74767e','#8a8c94']];
   const K=['grass','sand','snow','rock'];
@@ -43,4 +44,14 @@
   }catch(e){console.warn('ranglar',e)}
   // vinyetka: chetlarni salgina qorong'ilashtirib, markazga e'tiborni qaratadi
   const v=document.createElement('div');v.id='vig';const c=document.getElementById('c');c.parentNode.insertBefore(v,c.nextSibling);
+})();
+// ---------- okean chuqurligi: sayoz -> chuqur 4 daraja ----------
+(function(){
+  try{
+    const raw=atob(EARTH_OD),OD=new Uint8Array(GX*GY);let p=0;for(let i=0;i+1<raw.length&&p<OD.length;i+=2){const v=raw.charCodeAt(i),n=raw.charCodeAt(i+1);for(let k=0;k<n&&p<OD.length;k++)OD[p++]=v}
+    window.OD=OD;window.odl=(tx,ty)=>{const i=pt(tx,ty);return i<0?1:OD[i]};
+    const mk=(col,seed)=>{const c=document.createElement('canvas');c.width=32;c.height=16;__paintTile(c,col,'water',seed);return c};
+    const C=[['#5cbfc8','#62c5cf'],['#3597c6','#3a9ecc'],['#2467a6','#2870ae'],['#174785','#1a4e8e']];
+    window.WTLD=C.map((a,k)=>a.map((col,i)=>mk(col,120+k*3+i)));
+  }catch(e){console.warn('chuqurlik',e)}
 })();
