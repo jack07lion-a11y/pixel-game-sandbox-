@@ -45,6 +45,7 @@ for ch in range(3):oc_col[...,ch]=np.interp(dp,xs,[c[ch] for _,c in ramp])
 # qirg'oq: sayoz yorqin sayoz zona
 dist=blur(land.astype(np.float32),5.0)
 oc_col=oc_col+ (np.array([30,40,26],np.float32))*np.clip(dist[...,None]*2.4,0,1)
+np.savez_compressed(S+'relief.npz',e=e.astype(np.float32),forest=forest.astype(np.float32),dp=dp.astype(np.float32),T=T,w0=wt[0].astype(np.float32),w1=wt[1].astype(np.float32),w2=wt[2].astype(np.float32),w3=wt[3].astype(np.float32))
 out=np.where(land[...,None],land_col,oc_col)
 # aniq qirg'oq chizig'i
 edge=land&(blur(land.astype(np.float32),1.0)<.78)
