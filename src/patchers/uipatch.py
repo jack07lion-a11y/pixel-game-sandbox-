@@ -33,7 +33,7 @@ IC={
 }
 def uri(b):return 'url("data:image/svg+xml,'+urllib.parse.quote(S(b),safe="/:=' ()-,.")+'")'
 css='/*UI-BEGIN*/\n:root{'+''.join('--i-%s:%s;'%(k,uri(v)) for k,v in IC.items())+'}\n'+open(os.path.join(R,'ui.css'),encoding='utf-8').read()+'\n/*UI-END*/'
-js='/*UIJS-BEGIN*/\n'+''.join(open(os.path.join(R,n),encoding='utf-8').read()+'\n' for n in ('ui.js','colors.js','style.js','radar.js','space.js','vox.js'))+'/*UIJS-END*/'
+js='/*UIJS-BEGIN*/\n'+''.join(open(os.path.join(R,n),encoding='utf-8').read()+'\n' for n in ('ui.js','colors.js','style.js','hdhero.js','radar.js','space.js','vox.js'))+'/*UIJS-END*/'
 src=open(H,encoding='utf-8').read()
 src=re.sub(r'/\*UI-BEGIN\*/.*?/\*UI-END\*/\n?','',src,flags=re.S)
 src=re.sub(r'/\*UIJS-BEGIN\*/.*?/\*UIJS-END\*/\n?','',src,flags=re.S)

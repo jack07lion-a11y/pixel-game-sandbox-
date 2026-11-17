@@ -252,7 +252,7 @@ vp();
 try{if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(()=>{})}catch(e){}
 const cv=document.getElementById('c'),ctx=cv.getContext('2d');
 let PX,W,H;
-function rs(){PX=Math.max(2,Math.min(6,Math.round(VH/190)));W=Math.ceil(VW/PX);H=Math.ceil(VH/PX);cv.width=W;cv.height=H;cv.style.width=W*PX+'px';cv.style.height=H*PX+'px';ctx.imageSmoothingEnabled=false}
+function rs(){PX=Math.max(2,Math.min(6,Math.round(VH/190)));W=Math.ceil(VW/PX);H=Math.ceil(VH/PX);cv.width=W*2;cv.height=H*2;cv.style.width=W*PX+'px';cv.style.height=H*PX+'px';ctx.setTransform(2,0,0,2,0,0);ctx.imageSmoothingEnabled=false}
 function relayout(){vp();rs();if(typeof bedSize==='function')bedSize()}
 addEventListener('resize',relayout);addEventListener('orientationchange',()=>{setTimeout(relayout,60);setTimeout(relayout,300)});
 if(window.visualViewport)visualViewport.addEventListener('resize',relayout);
@@ -1085,7 +1085,7 @@ DM.forEach(d=>items.push({...bb(d.x,d.y,5),f(){const o=pj(d.x,d.y),X=o[0],Y=o[1]
     if(P.inv>0&&Math.floor(time*20)%2)return;
     if(hero&&(P.fly||P.z>3)&&!TF.act&&P.dead<=0){drawFly(X,Y0,zz);return}
     const idle=!P.mov,f=TF.act?6:AT.t>0?8+AT.n*3+(AT.t/AT.d>.75?0:AT.t/AT.d>.4?1:2):(idle?6+(Math.floor(time*1.6)%2):Math.floor(P.t)%6);
-    const mp=[[2,0],[3,0],[0,0],[3,1],[2,1],[4,1],[1,0],[4,0]][P.sec],d=mp[0];ctx.save();ctx.translate(X,Y);if(mp[1])ctx.scale(-1,1);{const fl2=hero&&P.z>3&&(P.mov||P.dive>0),im=fl2?sprF[P.sec==2?0:P.sec==6?1:2][Math.floor(time*12)%4]:(hero?spr:sprC)[d][f];ctx.drawImage(im,-15,-37);if(TF.act){const u=TF.t/TF.d,sw=TF.to?.45:.4,al=u<sw?.9*u/sw:.9*(1-(u-sw)/(1-sw));ctx.globalAlpha=Math.max(0,al);ctx.drawImage(sil(im,'#fff'),-15,-37);ctx.globalAlpha=1}}ctx.restore();if(TF.act)tfFx(X,Y);digFx(X,Y);
+    const mp=[[2,0],[3,0],[0,0],[3,1],[2,1],[4,1],[1,0],[4,0]][P.sec],d=mp[0];ctx.save();ctx.translate(X,Y);if(mp[1])ctx.scale(-1,1);{const fl2=hero&&P.z>3&&(P.mov||P.dive>0),im=fl2?sprF[P.sec==2?0:P.sec==6?1:2][Math.floor(time*12)%4]:(hero?spr:sprC)[d][f];const imH=!fl2&&window.sprH?((hero?sprH:sprHC)[d]||[])[f]:null,iw=imH?30:im.width,ih=imH?39:im.height,ib=imH||im;ctx.drawImage(ib,-15,-37,iw,ih);if(TF.act){const u=TF.t/TF.d,sw=TF.to?.45:.4,al=u<sw?.9*u/sw:.9*(1-(u-sw)/(1-sw));ctx.globalAlpha=Math.max(0,al);ctx.drawImage(sil(ib,'#fff'),-15,-37,iw,ih);ctx.globalAlpha=1}}ctx.restore();if(TF.act)tfFx(X,Y);digFx(X,Y);
     if(wade){ctx.fillStyle='rgba(70,140,195,.7)';ctx.fillRect(X-9,Y-5,18,4);E(X,Y-1,10,3,'rgba(70,140,195,.7)');ctx.fillStyle='rgba(255,255,255,.65)';for(let a=0;a<14;a++){const t=a*.449+time*2;ctx.fillRect(X+Math.round(Math.cos(t)*11),Y-1+Math.round(Math.sin(t)*3),1,1)}}
     if(AT.t>0&&AT.t/AT.d<.78&&AT.t/AT.d>.3){const a=P.sec*Math.PI/4,al=Math.min(1,(AT.t/AT.d-.3)/.3),kk=AT.n==2,r=kk?20:16,zy=kk?8:15;ctx.fillStyle=kk?'rgba(255,170,60,'+al+')':'rgba(255,255,255,'+al+')';
       for(let q=-6;q<=6;q++){const b=a+q*.2;ctx.fillRect(X+Math.round(Math.cos(b)*r)-1,Y-zy+Math.round(Math.sin(b)*r*.55),2,1)}}}});
@@ -1096,7 +1096,7 @@ DM.forEach(d=>items.push({...bb(d.x,d.y,5),f(){const o=pj(d.x,d.y),X=o[0],Y=o[1]
   const bef=items.map(()=>[]),out=[],vis=[];
   items.forEach((a,i)=>items.forEach((b,j)=>{if(i!=j){const ab=a.x1<=b.x0||a.y1<=b.y0,ba=b.x1<=a.x0||b.y1<=a.y0;if(ab&&!ba)bef[j].push(i)}}));
   const visit=i=>{if(vis[i])return;vis[i]=1;bef[i].forEach(visit);out.push(items[i])};
-  items.forEach((_,i)=>visit(i));out.forEach(i=>i.f());
+  items.forEach((_,i)=>visit(i));out.forEach(i=>{const cx=(i.x0+i.x1)/2,cy=(i.y0+i.y1)/2,o=pj(cx,cy);ctx.save();ctx.translate(o[0],o[1]);ctx.scale(1,1.06);ctx.translate(-o[0],-o[1]);i.f();ctx.restore()});
   BL.forEach(b=>{const o=pj(b.x,b.y),y=o[1]-(b.z|0);E(o[0],o[1],3,1,'rgba(0,0,0,.2)');E(o[0],y,4,4,'rgba(255,200,80,.5)');E(o[0],y,3,3,'#ffe27a');E(o[0],y,1,1,'#fff')});
   apples.forEach(a=>{const o=pj(a.x,a.y),y=o[1]-(a.z|0);E(o[0],o[1],3,1,'rgba(0,0,0,.25)');ctx.fillStyle='#d8323c';ctx.fillRect(o[0]-1,y-3,3,3);ctx.fillStyle='#ff9a9a';ctx.fillRect(o[0]-1,y-3,1,1);ctx.fillStyle='#3a7a2a';ctx.fillRect(o[0],y-4,1,1)});
   smoke.forEach(s=>{const o=pj(s.x,s.y),a=Math.max(0,.55-s.l*.22),v=235-dayN*120|0;E(o[0],o[1]-(s.z|0),Math.round(s.r),Math.round(s.r*.8),'rgba('+v+','+v+','+(v+5)+','+a+')')});
@@ -2246,7 +2246,7 @@ function plungeIn(v){P.fly=0;P.z=0;FVx=FVy=FS=0;splashFx(P.x,P.y,v);sndSplash(2)
 function breachOut(){const a=P.sec*Math.PI/4,fx=Math.cos(a),fy=Math.sin(a),wx=.5*(fy+fx),wy=.5*(fy-fx),l=Math.hypot(wx,wy)||1;uwExit(1);P.sw=0;P.fly=1;P.z=2;ALT=70;FZV=150;FVx=wx/l*90;FVy=wy/l*90;P.pw=Math.max(P.pw,30);
   splashFx(P.x,P.y,320);sndSplash(2);shake=Math.max(shake,.35);pop('Suvdan otildingiz!',1.2)}
 const WVC=document.createElement('canvas');
-function waveFx(u){const w=cv.width,h=cv.height;if(WVC.width!==w||WVC.height!==h){WVC.width=w;WVC.height=h}const g=WVC.getContext('2d');g.clearRect(0,0,w,h);g.drawImage(cv,0,0);const amp=Math.min(1,u)*4;ctx.fillStyle='#061625';ctx.fillRect(0,0,w,h);
+function waveFx(u){const w=W,h=H;if(WVC.width!==w||WVC.height!==h){WVC.width=w;WVC.height=h}const g=WVC.getContext('2d');g.clearRect(0,0,w,h);g.drawImage(cv,0,0,w,h);const amp=Math.min(1,u)*4;ctx.fillStyle='#061625';ctx.fillRect(0,0,w,h);
   for(let y=0;y<h;y+=2){const o=Math.round(Math.sin(y*.22+time*16)*amp);ctx.drawImage(WVC,0,y,w,2,o,y,w,2)}}
 
 // ===================== QUYOSH TIZIMI: gravitatsiya, o'q qiyaligi, fasllar, iqlim =====================
@@ -3273,6 +3273,74 @@ layoutInit();relayout();
   const xg=window.xGround;window.xGround=function(){xg();cloudShadows()};
 })();
 
+// ===== HD QAHRAMON: 2x aniqlikdagi (kichik piksel) sprayt, qalin to'q-ko'k kontur, 4 tonli soya =====
+(function(){
+  if(typeof mk!=='function'||typeof SW==='undefined')return;
+  const rd=Math.round;
+  const hR=(g,x,y,w,h,dx=0,dy=0)=>g.fillRect(rd(x*2)+dx*2,rd(y*2)+dy*2,w*2,h*2);
+  const hL=(g,x1,y1,x2,y2,t,dx=0,dy=0)=>{const n=Math.max(Math.abs(x2-x1),Math.abs(y2-y1),1)*4;for(let i=0;i<=n;i++)g.fillRect(rd((x1+(x2-x1)*i/n)*2)+dx*2,rd((y1+(y2-y1)*i/n)*2)+dy*2,t*2,t*2)};
+  const hE=(g,cx,cy,rx,ry,dx=0,dy=0)=>{cx=rd(cx*2);cy=rd(cy*2);rx*=2;ry*=2;for(let y=-ry;y<=ry;y++){const w=rd(rx*Math.sqrt(1-y*y/(ry*ry+.01)));g.fillRect(cx-w+dx*2,cy+y+dy*2,w*2+1,1)}};
+  const hP=(g,pp,dx=0,dy=0)=>{const q=pp.map(p=>[rd(p[0]*2),rd(p[1]*2)]);let a=1e9,b=-1e9;q.forEach(p=>{a=Math.min(a,p[1]);b=Math.max(b,p[1])});
+    for(let y=a;y<=b;y++){const xs=[];for(let i=0;i<q.length;i++){const p=q[i],r=q[(i+1)%q.length];if((p[1]<=y&&r[1]>y)||(r[1]<=y&&p[1]>y))xs.push(p[0]+(y-p[1])/(r[1]-p[1])*(r[0]-p[0]))}
+      xs.sort((m,n)=>m-n);for(let i=0;i+1<xs.length;i+=2)g.fillRect(rd(xs[i])+dx*2,y+dy*2,Math.max(1,rd(xs[i+1])-rd(xs[i])),1)}};
+  // 4 tonli soya: asos (eng qorong'i) -> o'rta -> yorug' -> yaltirash
+  const hshade=(S,ramp,k,draw)=>{const w=SW*2,h=SH*2;
+    const A=mkc(w,h),a=A.getContext('2d');a.fillStyle=ramp[3]||ramp[2];draw(a,0,0);
+    a.globalCompositeOperation='source-atop';a.fillStyle=ramp[2];draw(a,-k*.5,-k*.5);
+    a.fillStyle=ramp[1];draw(a,-k,-k);
+    const B=mkc(w,h),b=B.getContext('2d');b.fillStyle=ramp[0];draw(b,-k,-k);b.globalCompositeOperation='destination-out';draw(b,k*.5,k*.5);
+    a.drawImage(B,0,0);S.drawImage(A,0,0)};
+  // qalin kontur (2 px), kontur rangi to'q-ko'k
+  const houtline=src=>{const w=SW*2,h=SH*2,o=mkc(w,h),g=o.getContext('2d');
+    [[-2,0],[2,0],[0,-2],[0,2],[-1,-1],[1,-1],[-1,1],[1,1],[-2,-1],[-2,1],[2,-1],[2,1],[-1,-2],[1,-2],[-1,2],[1,2]].forEach(([x,y])=>g.drawImage(src,x,y));
+    g.globalCompositeOperation='source-in';g.fillStyle='#10102a';g.fillRect(0,0,w,h);g.globalCompositeOperation='source-over';g.drawImage(src,0,0);return o};
+  Object.assign(window,{hR,hL,hE,hP,hshade,houtline});
+  let s=mk.toString().replace(/\bsR\(/g,'hR(').replace(/\bsL\(/g,'hL(').replace(/\bsE\(/g,'hE(').replace(/\bsP\(/g,'hP(').replace(/shade\(S,/g,'hshade(S,').replace(/return outline\(o\)/,'return houtline(o)').replace('mkc(SW,SH)','mkc(SW*2,SH*2)');
+  s=s.replace(/^function mk\(/,'function mkH(');
+  let mkH;try{mkH=(0,eval)('('+s+')')}catch(e){console.warn('HD qahramon',e);return}
+  // yuz tafsilotlari: bosh yuqori qismidagi sochga yorug' chiziq (HD)
+  try{window.sprH=[0,1,2,3,4].map(d=>Array.from({length:17},(_,f)=>mkH(d,f)));window.sprHC=[0,1,2,3,4].map(d=>Array.from({length:8},(_,f)=>mkH(d,f,1)))}catch(e){console.warn('HD sprayt',e);window.sprH=null}
+
+  // ---- tafsilot o'tkazmasi: yuz (ko'z, qosh, burun, og'iz), soch yaltirashi, ko'ylak burmalari, shim chizig'i ----
+  const isSkin=(r,g,b,a)=>a>200&&r>150&&r<250&&g>100&&g<200&&b>70&&b<170&&r>g+14&&g>b+8;
+  const isHair=(r,g,b,a)=>a>200&&r<86&&g<70&&b<60&&r>=g&&g>=b-4&&r+g+b>20;
+  const isShirt=(r,g,b,a)=>a>200&&r>90&&g<90&&b<110&&r>g+40&&r>b+20;
+  const isPant=(r,g,b,a)=>a>200&&r<80&&g<80&&b<90&&Math.abs(r-g)<14&&b>=r&&r+g+b>70;
+  function detail(cv,d,civ,f){const w=cv.width,h=cv.height,g=cv.getContext('2d'),im=g.getImageData(0,0,w,h),D=im.data;
+    const px=(x,y)=>{const i=(y*w+x)*4;return[D[i],D[i+1],D[i+2],D[i+3]]},set=(x,y,c)=>{if(x<0||y<0||x>=w||y>=h)return;const i=(y*w+x)*4;D[i]=c[0];D[i+1]=c[1];D[i+2]=c[2];D[i+3]=255};
+    const mat=(x,y,fn)=>{if(x<0||y<0||x>=w||y>=h)return false;const c=px(x,y);return fn(c[0],c[1],c[2],c[3])};
+    // yuz chegarasi
+    let x0=1e9,x1=-1,y0=1e9,y1=-1;for(let y=0;y<h*.5;y++)for(let x=0;x<w;x++)if(mat(x,y,isSkin)){x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y)}
+    if(x1>=0&&y1-y0>=4){const cx=(x0+x1)>>1,fw=x1-x0,fh=y1-y0,ey=y0+Math.round(fh*.34),ink=[22,14,18],wh=[250,246,240],ps=[28,18,14],br=[40,26,20],sk2=[150,98,78];
+      const eye=(ex,flip)=>{ // ko'z: oq + qorachiq + qovoq chizig'i
+        for(let dy=0;dy<4;dy++)for(let dx=0;dx<5;dx++)if(mat(ex+dx,ey+dy,isSkin))set(ex+dx,ey+dy,wh);
+        const pxp=ex+(flip?1:2);for(let dy=0;dy<4;dy++)for(let dx=0;dx<2;dx++)set(pxp+dx,ey+dy,ps);set(pxp,ey,[250,250,250]);
+        for(let dx=-1;dx<6;dx++)set(ex+dx,ey-1,ink)};
+      const brow=(bx,tilt)=>{for(let dx=0;dx<6;dx++)for(let t=0;t<2;t++)set(bx+dx,ey-4-t+(tilt>0?Math.floor((5-dx)/3):Math.floor(dx/3)),br)};
+      if(d===0||d===3||d===1&&false){const shift=d===3?Math.round(fw*.12):0,sp=Math.max(5,Math.round(fw*.28));
+        eye(cx-sp-2+shift,0);eye(cx+sp-3+shift,1);brow(cx-sp-3+shift,1);brow(cx+sp-3+shift,-1);
+        for(let dy=0;dy<3;dy++)set(cx+shift,ey+7+dy,sk2),set(cx+shift+1,ey+9,[120,70,58]); // burun
+        for(let dx=0;dx<5;dx++)set(cx-2+dx+shift,ey+13,[132,66,56]);
+        set(cx-sp-3+shift,ey+9,[226,120,110]);set(cx+sp+shift,ey+9,[226,120,110])}
+      else if(d===2){const ex=x1-8;eye(ex,1);brow(ex-1,-1);for(let dy=0;dy<3;dy++)set(x1-1,ey+7+dy,[236,184,156]);for(let dx=0;dx<4;dx++)set(x1-6+dx,ey+13,[132,66,56]);for(let dy=0;dy<4;dy++)set(x0+6,ey+4+dy,sk2)}
+    }
+    // soch yaltirashi (yorug' chiziqlar) va uchlari
+    {let hx0=1e9,hx1=-1,hy0=1e9;for(let y=0;y<h*.45;y++)for(let x=0;x<w;x++)if(mat(x,y,isHair)){hx0=Math.min(hx0,x);hx1=Math.max(hx1,x);hy0=Math.min(hy0,y)}
+      if(hx1>0){const hl=[96,70,52],hl2=[132,98,74];for(let k=0;k<3;k++){const sx=hx0+4+k*Math.round((hx1-hx0)*.22),sy=hy0+2+k%2;for(let t=0;t<7;t++){const x=sx+t,y=sy+Math.floor(t/3);if(mat(x,y,isHair))set(x,y,t<4?hl2:hl)}}
+        for(let x=hx0+3;x<hx1-2;x+=5)if(mat(x,hy0+1,isHair))set(x,hy0,[40,26,20])}}
+    // ko'ylak burmalari
+    {let sy0=1e9,sy1=-1,sx0=1e9,sx1=-1;for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(mat(x,y,isShirt)){sy0=Math.min(sy0,y);sy1=Math.max(sy1,y);sx0=Math.min(sx0,x);sx1=Math.max(sx1,x)}
+      if(sy1>0){const dk=[84,16,40],lt=[210,84,112];for(let t=0;t<6;t++){const x=sx0+3+t,y=sy0+6+Math.floor(t*.7);if(mat(x,y,isShirt))set(x,y,dk);const x2=sx1-4-t,y2=sy0+9+Math.floor(t*.6);if(mat(x2,y2,isShirt))set(x2,y2,dk)}
+        for(let t=0;t<5;t++){const x=sx0+3+t,y=sy0+2;if(mat(x,y,isShirt))set(x,y,lt)}
+        // yoqa (oq)
+        for(let x=sx0+Math.round((sx1-sx0)*.35);x<sx0+Math.round((sx1-sx0)*.65);x++){if(mat(x,sy0,isShirt)||mat(x,sy0+1,isShirt))set(x,sy0+1,[238,232,222])}}}
+    // shim chizig'i
+    {let py0=1e9,py1=-1;for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(mat(x,y,isPant)){py0=Math.min(py0,y);py1=Math.max(py1,y)}
+      if(py1>0)for(let x=0;x<w;x++){const ys=[];for(let y=py0;y<=py1;y++)if(mat(x,y,isPant))ys.push(y);if(ys.length>8&&x%2==0){const y=ys[Math.floor(ys.length*.4)];set(x,y,[36,36,52])}}}
+    g.putImageData(im,0,0)}
+  try{if(window.sprH){window.sprH.forEach((a,d)=>a.forEach(c=>detail(c,d,0)));window.sprHC.forEach((a,d)=>a.forEach(c=>detail(c,d,1)))}}catch(e){console.warn('HD tafsilot',e)}
+})();
+
 // ---------- GTA uslubidagi mini-radar: faqat atrofni yaqin masshtabda ko'rsatadi; bosilsa — dunyo xaritasi (globus) ----------
 (function(){
   const RD=168,K=4.2,R2=(RD/2)*(RD/2),CX=RD/2;
@@ -3682,7 +3750,7 @@ window.moonLight=function(){const mi=moonInfo(),d=days(),mv=moonVec(d),ml=Math.h
         if(ys<ymin[i]){const c=C0[idx];let r=c&255,g=(c>>8)&255,b=(c>>16)&255;r=r*ff+fogR*fog;g=g*ff+fogG*fog;b=b*ff+fogB*fog;const pc=(255<<24)|(b<<16)|(g<<8)|r;
           let y0=ys<0?0:ys;for(let y=y0;y<ymin[i];y++)u[y*w+i]=pc;ymin[i]=y0}}
       z+=dz;dz+=.022}
-    ctx.putImageData(img,0,0);
+    if(!VX.tmp||VX.tmp.width!==w||VX.tmp.height!==h){VX.tmp=document.createElement('canvas');VX.tmp.width=w;VX.tmp.height=h}VX.tmp.getContext('2d').putImageData(img,0,0);ctx.drawImage(VX.tmp,0,0);
     // o'yinchi (sprayt, perspektiva bo'yicha kattalashtirilgan)
     {const dx=P.x-cam[0],dy=P.y-cam[1],zf=dx*fx+dy*fy,xr=dx*rx+dy*ry,hP=(VX.HS[((pty-oy)*R+(ptx-ox))]||0)+(P.z||0),X=w/2+(xr/(zf*K))*(w/2),Y=(camH-hP)/zf*scale+hor,k=scale/zf*.5;
       const mp=[[2,0],[3,0],[0,0],[3,1],[2,1],[4,1],[1,0],[4,0]][P.sec|0]||[2,0],set=(typeof hero!=='undefined'&&hero)?spr:sprC,im=(set[mp[0]]||set[2])[4];

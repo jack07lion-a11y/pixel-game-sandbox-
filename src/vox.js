@@ -51,7 +51,7 @@
         if(ys<ymin[i]){const c=C0[idx];let r=c&255,g=(c>>8)&255,b=(c>>16)&255;r=r*ff+fogR*fog;g=g*ff+fogG*fog;b=b*ff+fogB*fog;const pc=(255<<24)|(b<<16)|(g<<8)|r;
           let y0=ys<0?0:ys;for(let y=y0;y<ymin[i];y++)u[y*w+i]=pc;ymin[i]=y0}}
       z+=dz;dz+=.022}
-    ctx.putImageData(img,0,0);
+    if(!VX.tmp||VX.tmp.width!==w||VX.tmp.height!==h){VX.tmp=document.createElement('canvas');VX.tmp.width=w;VX.tmp.height=h}VX.tmp.getContext('2d').putImageData(img,0,0);ctx.drawImage(VX.tmp,0,0);
     // o'yinchi (sprayt, perspektiva bo'yicha kattalashtirilgan)
     {const dx=P.x-cam[0],dy=P.y-cam[1],zf=dx*fx+dy*fy,xr=dx*rx+dy*ry,hP=(VX.HS[((pty-oy)*R+(ptx-ox))]||0)+(P.z||0),X=w/2+(xr/(zf*K))*(w/2),Y=(camH-hP)/zf*scale+hor,k=scale/zf*.5;
       const mp=[[2,0],[3,0],[0,0],[3,1],[2,1],[4,1],[1,0],[4,0]][P.sec|0]||[2,0],set=(typeof hero!=='undefined'&&hero)?spr:sprC,im=(set[mp[0]]||set[2])[4];

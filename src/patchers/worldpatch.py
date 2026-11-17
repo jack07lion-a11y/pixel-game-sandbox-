@@ -152,6 +152,15 @@ sub("PMD&&isOc(tx,ty)?'#e6d8a8':'#c9b98a'","PMD&&isOc(tx,ty)?(typeof foamCol==='
 src=src.replace("render();if(typeof cloudDraw==='function')cloudDraw();rgDraw(dt);flyFx(dt);","if(window.VX&&VX.on)voxRender();else{render();if(typeof cloudDraw==='function')cloudDraw()}rgDraw(dt);flyFx(dt);")
 sub("render();rgDraw(dt);flyFx(dt);mmDraw();xDraw(dt);requestAnimationFrame(loop)}","if(window.VX&&VX.on)voxRender();else{render();if(typeof cloudDraw==='function')cloudDraw()}rgDraw(dt);flyFx(dt);mmDraw();xDraw(dt);requestAnimationFrame(loop)}")
 sub("(.05+(hs(tx>>2,ty>>2)&3)*.05)","(.02)")
+
+# ---------- 2x aniqlik: asosiy kanvas ichki o'lchami ikki barobar (qahramon kichik pikselda) ----------
+sub("cv.width=W;cv.height=H;cv.style.width=W*PX+'px';cv.style.height=H*PX+'px';ctx.imageSmoothingEnabled=false}","cv.width=W*2;cv.height=H*2;cv.style.width=W*PX+'px';cv.style.height=H*PX+'px';ctx.setTransform(2,0,0,2,0,0);ctx.imageSmoothingEnabled=false}")
+sub("function waveFx(u){const w=cv.width,h=cv.height;if(WVC.width!==w||WVC.height!==h){WVC.width=w;WVC.height=h}const g=WVC.getContext('2d');g.clearRect(0,0,w,h);g.drawImage(cv,0,0);","function waveFx(u){const w=W,h=H;if(WVC.width!==w||WVC.height!==h){WVC.width=w;WVC.height=h}const g=WVC.getContext('2d');g.clearRect(0,0,w,h);g.drawImage(cv,0,0,w,h);")
+# qahramon HD sprayti
+sub("im=fl2?sprF[P.sec==2?0:P.sec==6?1:2][Math.floor(time*12)%4]:(hero?spr:sprC)[d][f];ctx.drawImage(im,-15,-37);","im=fl2?sprF[P.sec==2?0:P.sec==6?1:2][Math.floor(time*12)%4]:(hero?spr:sprC)[d][f];const imH=!fl2&&window.sprH?((hero?sprH:sprHC)[d]||[])[f]:null,iw=imH?30:im.width,ih=imH?39:im.height,ib=imH||im;ctx.drawImage(ib,-15,-37,iw,ih);")
+sub("ctx.drawImage(sil(im,'#fff'),-15,-37);ctx.globalAlpha=1}}ctx.restore();if(TF.act)tfFx(X,Y);","ctx.drawImage(sil(ib,'#fff'),-15,-37,iw,ih);ctx.globalAlpha=1}}ctx.restore();if(TF.act)tfFx(X,Y);")
+# kamera burchagi: tik jismlar ~6% balandroq
+sub("out.forEach(i=>i.f());","out.forEach(i=>{const cx=(i.x0+i.x1)/2,cy=(i.y0+i.y1)/2,o=pj(cx,cy);ctx.save();ctx.translate(o[0],o[1]);ctx.scale(1,1.06);ctx.translate(-o[0],-o[1]);i.f();ctx.restore()});")
 # nomlar
 src=src.replace("gMark(HOME[0],HOME[1],'#ffd23a','Biyon')","gMark(HOME[0],HOME[1],'#ffd23a','Dushanbe')").replace("f(HOME[0],HOME[1],'#ffd23a','Biyon')","f(HOME[0],HOME[1],'#ffd23a','Dushanbe')")
 src=src.replace("rzShow('Biyon','Tinch vodiy · uy')","rzShow('Dushanbe','Tojikiston · uy')")
