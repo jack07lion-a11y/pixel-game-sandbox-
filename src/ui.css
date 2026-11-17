@@ -59,3 +59,7 @@
 #root #bbar button.on,#root #bpal button.on{border-color:#ffe27a;background:linear-gradient(180deg,rgba(200,140,40,.6),rgba(100,64,10,.65))}
 #root #bt2 button{border:1.5px solid var(--ln);background:var(--glass);box-shadow:var(--sh);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 #root #bt2 button.on{border-color:#ffe27a;background:linear-gradient(180deg,rgba(200,140,40,.7),rgba(100,64,10,.75))}
+/* vinyetka */
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,rgba(0,0,0,0) 58%,rgba(6,10,6,.2) 100%)}
+/* radar: yumaloq, shisha hoshiyali */
+#root #mm{width:calc(var(--u)*2.3)!important;height:calc(var(--u)*2.3)!important;border-radius:50%!important;border:2px solid rgba(255,255,255,.4)!important;box-shadow:0 0 0 3px rgba(8,12,20,.45),0 6px 16px rgba(0,0,0,.45)!important;background:#101820!important;opacity:1!important}

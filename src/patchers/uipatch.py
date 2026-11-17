@@ -32,12 +32,15 @@ IC={
 }
 def uri(b):return 'url("data:image/svg+xml,'+urllib.parse.quote(S(b),safe="/:=' ()-,.")+'")'
 css='/*UI-BEGIN*/\n:root{'+''.join('--i-%s:%s;'%(k,uri(v)) for k,v in IC.items())+'}\n'+open(os.path.join(R,'ui.css'),encoding='utf-8').read()+'\n/*UI-END*/'
-js='/*UIJS-BEGIN*/\n'+open(os.path.join(R,'ui.js'),encoding='utf-8').read()+'\n/*UIJS-END*/'
+js='/*UIJS-BEGIN*/\n'+''.join(open(os.path.join(R,n),encoding='utf-8').read()+'\n' for n in ('ui.js','colors.js','radar.js'))+'/*UIJS-END*/'
 src=open(H,encoding='utf-8').read()
 src=re.sub(r'/\*UI-BEGIN\*/.*?/\*UI-END\*/\n?','',src,flags=re.S)
 src=re.sub(r'/\*UIJS-BEGIN\*/.*?/\*UIJS-END\*/\n?','',src,flags=re.S)
 assert src.count('</style></head>')==1
 src=src.replace('</style></head>',css+'\n</style></head>')
+# GLOBEFIX
+for a,b in (('const BC=[[93,150,72],[222,196,130],[232,240,246],[132,134,142]]','const BC=[[82,148,58],[220,196,140],[238,243,248],[126,127,134]]'),('gR=Math.min(w,h)*.4*gZoom','gR=Math.min(w,h)*.46*gZoom')):
+    if a in src: src=src.replace(a,b)
 tail='requestAnimationFrame(loop);\n</script></body></html>'
 assert src.rstrip().endswith(tail),'tail'
 k=src.rindex(tail)
