@@ -1,0 +1,21 @@
+p='/mnt/user-data/outputs/pixel-game.html'
+s=open(p,encoding='utf-8').read()
+A=open('rzA.js',encoding='utf-8').read();B=open('rzB.js',encoding='utf-8').read()
+def rep(a,b):
+    global s
+    assert s.count(a)==1,(s.count(a),a[:70])
+    s=s.replace(a,b)
+rep('const SPC=[0,0,0,0,2,2,2,1,1,1,0,0,0,1,3];',A+'\nconst SPC=[0,0,0,0,2,2,2,1,1,1,0,0,0,1,3];')
+rep("  if(b==3)return r<.5?12:14;","  {const rt=rgT(x>>4,y>>4);if(rt>0){const w=RTY[rt][4];let tot=0;for(const k in w)tot+=w[k];let q=rnd()*tot;for(const k in w){q-=w[k];if(q<=0)return+k}}}\n  if(b==3)return r<.5?12:14;")
+rep('const solids=[];','const solids=[];LMK.forEach(m=>solids.push({x:m.x-10,y:m.y-6,w:20,h:12}));')
+rep('// ================= OKEAN',B+'\n// ================= OKEAN')
+rep('      ctx.drawImage(p?PL[bi][h&1]:TL[bi][h%3],X,Y);','      const rt=p?-1:rgT(tx,ty),sv=rt>0?RZS[rzSite(tx,ty)]:null;ctx.drawImage(p?PL[bi][h&1]:rt>0?rgTile(rt,h,sv.v):TL[bi][h%3],X,Y);if(rt>0){rgGround(rt,tx,ty,h,X,Y,sv.hue);rgDeco(rt,tx,ty,h,sv.hue)}')
+rep('  const TX=WW/16,TY=WH/16;\n','  const TX=WW/16,TY=WH/16;RGI.length=0;\n')
+rep('  surfDraw();const items=[];','  surfDraw();const items=[];RGI.forEach(i=>items.push(i));LMK.forEach(m=>onS(m.x,m.y)&&items.push({...bb(m.x,m.y,m.r),f(){const o=pj(m.x,m.y);LMD[m.t](o[0],o[1],m)}}));')
+rep('update(hstop>0?(hstop-=dt,dt*.05):dt);render();mmDraw();','update(hstop>0?(hstop-=dt,dt*.05):dt);render();rgDraw(dt);mmDraw();')
+rep(":['#5d9648','#e4cb8c','#eef4f8','#8b8d96'][biome(tx,ty)];g.fillRect",":rzMM(['#5d9648','#e4cb8c','#eef4f8','#8b8d96'][biome(tx,ty)],tx,ty);g.fillRect")
+rep("else c3=isP(tx,ty)?PC[bi]:BC[bi];","else{c3=isP(tx,ty)?PC[bi]:BC[bi];const rt=rgT(tx,ty);if(rt>0){const T=RTY[rt][3],a=Math.min(.9,T[3]*1.4);c3=[c3[0]*(1-a)+T[0]*a,c3[1]*(1-a)+T[1]*a,c3[2]*(1-a)+T[2]*a]}}")
+rep('#bt,#dv,#uu,#ud{','#rgb{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 96px);transform:translate(-50%,-8px);opacity:0;transition:opacity .6s,transform .6s;pointer-events:none;text-align:center;z-index:6;font-family:monospace;color:#fff;text-shadow:0 2px 4px #000,0 0 10px #000}#rgb.on{opacity:1;transform:translate(-50%,0)}#rgb b{display:block;font-size:20px;letter-spacing:1px}#rgb small{display:block;font-size:11px;opacity:.85;margin-top:2px}\n#bt,#dv,#uu,#ud{')
+rep('<div id="swb">','<div id="rgb"></div>\n<div id="swb">')
+open(p,'w',encoding='utf-8').write(s)
+print('ok')

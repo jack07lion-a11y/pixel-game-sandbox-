@@ -1,0 +1,10 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();
+const cx=await b.newContext({viewport:{width:844,height:390}});const pg=await cx.newPage();pg.on('pageerror',e=>console.log('PAGEERR',e.message,(e.stack||'').split('\n').slice(0,4).join(' | ')));
+await pg.goto('file:///mnt/user-data/outputs/pixel-game.html#m5');await pg.waitForTimeout(2500);
+const tt=await pg.evaluate(()=>{Object.keys(INV).forEach(k=>INV[k]=50);const tx=Math.floor(P.x/16)+3,ty=Math.floor(P.y/16)+3;SB.rem=0;SB.sel=2;sbxAct(tx,ty,0,true);sbxAct(tx,ty,1,true);SB.sel=26;sbxAct(tx,ty,3,true);for(let i=0;i<40;i++)digHit(tx+1,ty,.3,false);SB.dirty=1;SB.saveT=0;return[tx,ty,pitD(tx+1,ty)]});
+await pg.waitForTimeout(1500);
+console.log('ls',await pg.evaluate(()=>{const s=localStorage.getItem('jsSbx'+MSZ);return s?s.length+':'+s.slice(0,40)+'..'+(JSON.parse(s).b||[]).length:null}),'MSZ',await pg.evaluate(()=>MSZ));
+await pg.reload();await pg.waitForTimeout(2500);
+console.log('after reload ls',await pg.evaluate(()=>{const s=localStorage.getItem('jsSbx'+MSZ);return s?s.length:null}),await pg.evaluate(()=>[MSZ,BLK.size,DG.size,P.x,P.y]),tt);
+await b.close()})();

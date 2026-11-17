@@ -1,0 +1,6 @@
+  case 22:cub(x,y,16,16,0,17,'#8a6a46','#6b4f33','#553d27');{const a=pj(x,y+16);ctx.fillStyle='#4e3a24';for(let i=2;i<16;i+=5){ctx.fillRect(a[0]+i,a[1]+(i>>1)-12+(i%3)*2,2,1);ctx.fillRect(a[0]+i+1,a[1]+(i>>1)-5,1,1)}}break;
+  case 23:cub(x,y,16,16,0,17,'#e2d09a','#c4ae72','#a69258');{const a=pj(x,y+16);ctx.fillStyle='#9a8446';for(let i=2;i<16;i+=4){ctx.fillRect(a[0]+i,a[1]+(i>>1)-13+(i%5),1,1);ctx.fillRect(a[0]+i+2,a[1]+(i>>1)-6,1,1)}}break;
+  case 24:cub(x,y,16,16,0,17,'#b5523b','#8f3e2c','#6e2f21');{const a=pj(x,y+16);ctx.fillStyle='rgba(235,215,190,.55)';for(let k=4;k<17;k+=4)for(let i=0;i<16;i++){ctx.fillRect(a[0]+i,a[1]+(i>>1)-k,1,1);if((i+(k>>2)*3)%8==0)ctx.fillRect(a[0]+i,a[1]+(i>>1)-k,1,4)}}break;
+  case 25:cub(x,y,16,16,0,17,'#f2f7fb','#cdd9e2','#aebccc');{const a=pj(x,y+16);ctx.fillStyle='#fff';for(let i=2;i<16;i+=5)ctx.fillRect(a[0]+i,a[1]+(i>>1)-14,2,1)}break;
+  case 26:cub(x,y,16,16,0,9,'#c24a34','#8e3526','#6e281c');{ctx.fillStyle='rgba(0,0,0,.2)';const a=pj(x,y+16);for(let k=3;k<9;k+=3)for(let i=0;i<16;i++)ctx.fillRect(a[0]+i,a[1]+(i>>1)-k,1,1)}break;
+  case 27:cub(x+3,y+3,10,10,0,17,'#b4854a','#8a6030','#6a4824');{const a=pj(x+3,y+13);ctx.fillStyle='#5a3b22';for(let k=4;k<17;k+=5)for(let i=0;i<10;i++)ctx.fillRect(a[0]+i,a[1]+(i>>1)-k,1,1)}break;

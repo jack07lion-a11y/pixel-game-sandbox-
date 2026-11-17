@@ -1,0 +1,14 @@
+const {chromium}=require('playwright');
+(async()=>{const b=await chromium.launch();const pg=await b.newPage({viewport:{width:900,height:560}});const errs=[];pg.on('pageerror',e=>errs.push(e.message+(e.stack||'').slice(0,400)));pg.on('console',m=>{if(m.type()==='error')errs.push('c:'+m.text())});
+await pg.goto('file:///mnt/user-data/outputs/pixel-game.html#m5');await pg.waitForTimeout(2500);
+await pg.click('#ed0');await pg.waitForTimeout(600);await pg.screenshot({path:'ed1.png'});
+await pg.click('#ebc');
+await pg.evaluate(()=>{ET.tool=0;ET.size=18;eBrush(70,50);eBrush(80,52);eBrush(90,48);ET.size=10;ET.tool=1;eBrush(100,50);ET.tool=2;ET.size=8;eBrush(75,45);ET.tool=3;ET.size=5;eBrush(85,58);
+ ET.tool=5;ET.size=1;eLine([60,50],[100,55]);ET.tool=6;eLine([66,45],[95,56]);ET.tool=7;eBrush(72,52);eBrush(88,50);eSave()});
+await pg.screenshot({path:'ed2.png'});
+await pg.click('#ebg');await pg.waitForTimeout(3500);
+console.log(await pg.evaluate(()=>[!!PMD,HS.length,trees.length,AN.length]));
+await pg.evaluate(()=>{P.x=72*32+16;P.y=56*32;cam.i=0});await pg.waitForTimeout(800);await pg.screenshot({path:'pg1.png'});
+await pg.evaluate(()=>{P.x=60*32;P.y=36*32;cam.i=0});await pg.waitForTimeout(800);await pg.screenshot({path:'pg2.png'});
+await pg.keyboard.press('m');await pg.waitForTimeout(2200);await pg.screenshot({path:'pg3.png'});
+console.log(errs.slice(0,6));await b.close()})();
