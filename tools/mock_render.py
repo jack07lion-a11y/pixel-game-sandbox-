@@ -39,8 +39,15 @@ L=ml>.5
 det=fbm(4,40,77);
 Hh=np.where(L,.012+Ev*(1+.5*(fbm(6,10,19)-.5)),0.0)
 rid=1-np.abs(fbm(5,14,23)*2-1);Hh=np.where(L,Hh+(rid-.5)*.22*np.clip(Ev,0,1)**1.5,0)
-ramp=np.clip((blur(L.astype(np.float32),7.0)-.5)*2.6,0,1)
-Hh=np.clip(Hh*(0.15+0.85*ramp),0,1.1)
+# orollar (dengizda): fraktal shovqin
+isl=fbm(6,26,211);farc=blur(L.astype(np.float32),10.0)<.06
+ISL=(isl>.66)&farc&~L
+L=L|ISL
+Hh=np.where(ISL,.04+(isl-.66)*.55,Hh)
+ramp=np.clip((blur(L.astype(np.float32),15.0)-.5)*1.8,0,1)
+Hh=np.clip(np.where(ISL,Hh,Hh*(0.10+0.90*ramp)),0,1.1)
+# daryolar: past balandlikdagi vodiy chiziqlari
+rv=np.abs(fbm(5,12,333)-.5);RIV=(rv<.011)&L&(Hh<.30)&(Hh>.03)
 # masofa (qirg'oqgacha), piksel
 Lf=L.astype(np.float32);dl=blur(Lf,2.2);dw=blur(Lf,14.0)
 # palitra
@@ -86,10 +93,17 @@ def terrain_color():
     col=col*sh[...,None]
     sand=L&(dl<.6)&(Hh<.10)
     col=np.where(sand[...,None],SAND,col)
+    col=np.where(RIV[...,None],np.array([70,172,226],np.float32),col)
+    # qishloqlar: kichik qizil tomli uylar
+    r=np.random.RandomState(4);hs=(r.rand(MH,MW)>.99965)&L&(Hh<.12)&~RIV&(dl>.7)
+    for dy in range(0,3):
+        for dx in range(0,4):
+            m=np.roll(np.roll(hs,dy,0),dx,1)
+            col=np.where(m[...,None],np.array([206,76,56],np.float32) if dy<2 else np.array([244,226,196],np.float32),col)
     return np.clip(col,0,255)
-def water_color():
+def water_color(dith=True):
     # chuqurlik: qirg'oqdan masofa + xarita chuqurligi
-    v=np.clip(.80*np.clip(1-dw*2.5,0,1)+.20*Dp,0,1)*4.0+bay*.5
+    v=np.clip(.80*np.clip(1-dw*2.5,0,1)+.20*Dp,0,1)*4.0+(bay*.5 if dith else 0)
     lv=np.clip(np.floor(v+.5),0,4).astype(int)
     col=np.zeros((MH,MW,3),np.float32)
     for k in range(5):col[lv==k]=WAT[k]
@@ -104,7 +118,9 @@ def water_color():
     gl=gl|np.roll(gl,1,1)
     col=np.where(gl[...,None]&(~L)[...,None]&(dl<.2)[...,None],np.array([226,246,255],np.float32),col)
     return col
-base=np.where(L[...,None],terrain_color(),water_color())
+TC=terrain_color()
+base=np.where(L[...,None],TC,water_color(True))
+base_nd=np.where(L[...,None],TC,water_color(False))
 # bulut maydoni (voxel: blok-blok)
 CELL=4
 cf=fbm(4,15,101)
@@ -117,6 +133,7 @@ def shadow(col,dx=14,dy=18):
     k=np.clip(sh*1.2,0,1)[...,None]
     return col*(1-k*.42)*(1-k*.0)+np.array([10,30,80],np.float32)*k*.22
 col_s=shadow(base)
+col_v=shadow(base_nd)
 np.savez_compressed(S+'mock_maps.npz',H=Hh.astype(np.float16),COL=np.clip(col_s,0,255).astype(np.uint8),CL=CLM.astype(np.float16),L=L)
 print('map',MW,MH)
 # ---------- 1) tepadan ko'rinish (bulutlar: bir necha balandlik qatlami, soya bilan) ----------
@@ -135,7 +152,8 @@ def overhead(cx,cy,out):
     Image.fromarray(np.clip(img,0,255).astype(np.uint8)).resize((win*720//IW,win*720//IW),Image.NEAREST).save(out)
 overhead(int(OVX*MW),int(OVY*MH),OUT+'_over.png')
 # ---------- 2) orqadan 3D ko'rinish (voxel-space, pikselli) ----------
-def voxel(cam,yaw,alt,horizon,scale,out,zfar=1100,curv=.00007):
+def voxel(cam,yaw,alt,horizon,scale,out,zfar=1100,curv=.00011):
+    HV=blur(Hh,1.4)
     Wd=IW;Hd=IW
     sky=np.zeros((Hd,Wd,3),np.float32)
     top=np.array([120,184,238],np.float32);bot=np.array([196,226,248],np.float32)
@@ -147,18 +165,18 @@ def voxel(cam,yaw,alt,horizon,scale,out,zfar=1100,curv=.00007):
     fogc=np.array([188,222,246],np.float32)
     # chiziqli maydon: har ustun uchun nur
     cols=(np.arange(Wd)-Wd/2)/(Wd/2)
-    z=2.0;dz=1.0
+    z=2.0;dz=.45
     while z<zfar:
         # nur yo'nalishi (kenglik 1.0 ≈ 55° ko'rish maydoni)
         dxr=sx+cols*sy*1.05;dyr=sy-cols*sx*1.05
         px=cam[0]+dxr*z;py=cam[1]+dyr*z
         ix=np.clip(px.astype(int),0,MW-1);iy=np.clip(py.astype(int),0,MH-1)
         inside=(px>=0)&(px<MW)&(py>=0)&(py<MH)
-        h=Hh[iy,ix]*210.0-(z*z)*curv*scale/ (scale)  # egrilik
+        h=HV[iy,ix]*210.0-(z*z)*curv*scale/ (scale)  # egrilik
         hh=np.where(inside,h,-40.0)
         ys=((alt-hh)/z*scale+horizon).astype(np.int32)
         fog=np.clip((z/zfar)**1.4,0,1)[...] if False else min(1.0,(z/zfar)**1.3)
-        colz=col_s[iy,ix]*(1-fog)+fogc*fog
+        colz=col_v[iy,ix]*(1-fog)+fogc*fog
         colz=np.where(inside[...,None],colz,fogc)
         for i in range(Wd):
             y=ys[i]
@@ -167,7 +185,7 @@ def voxel(cam,yaw,alt,horizon,scale,out,zfar=1100,curv=.00007):
                 if y0<ymin[i]:
                     img[y0:ymin[i],i]=colz[i];zbuf[y0:ymin[i],i]=z
                 ymin[i]=y0
-        z+=dz;dz+=.012
+        z+=dz;dz+=.006
     # bulutlar: uzoqdan yaqinga, faqat yerdan yaqinroq bo'lganda
     z=zfar;dz=2.0;zs=[]
     while z>170:
