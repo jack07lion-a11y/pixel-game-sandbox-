@@ -142,6 +142,8 @@ sub("for(let i=0;i<=WW;i+=960){const x=ox+i/WW*TW*s;gg.beginPath();gg.moveTo(x,o
 sub("for(let j=0;j<=WH;j+=720){const y=oy+j/WH*TH*s;gg.beginPath();gg.moveTo(ox,y);gg.lineTo(ox+TW*s,y);gg.stroke()}","for(let la=-60;la<=60;la+=30){const y=oy+(.5-la*.0174533/(2*LATR))*TH*s;gg.beginPath();gg.moveTo(ox,y);gg.lineTo(ox+TW*s,y);gg.stroke()}")
 sub("const f=(x,y,c,l,p)=>{const X=ox+x/WW*TW*s,Y=oy+y/WH*TH*s;","const f=(x,y,c,l,p)=>{const X=ox+wLon(x)/6.2831853*TW*s,Y=oy+wFy(y)*TH*s;")
 sub("X=ox+X/WW*TW*s;Y=oy+Y/WH*TH*s;i?gg.lineTo(X,Y):gg.moveTo(X,Y)","X=ox+wLon(X)/6.2831853*TW*s;Y=oy+wFy(Y)*TH*s;i?gg.lineTo(X,Y):gg.moveTo(X,Y)")
+sub('SR:10,A:160,','SR:109.2,A:23455,')
+sub('dayN=Math.max(0,Math.min(1,.5-sunV*1.2));','dayN=Math.max(0,Math.min(1,.5-sunV*1.2));if(dayN>0&&typeof moonLight==="function")dayN*=1-.3*moonLight();if(typeof moonHud==="function")moonHud(dt);')
 # nomlar
 src=src.replace("gMark(HOME[0],HOME[1],'#ffd23a','Biyon')","gMark(HOME[0],HOME[1],'#ffd23a','Dushanbe')").replace("f(HOME[0],HOME[1],'#ffd23a','Biyon')","f(HOME[0],HOME[1],'#ffd23a','Dushanbe')")
 src=src.replace("rzShow('Biyon','Tinch vodiy · uy')","rzShow('Dushanbe','Tojikiston · uy')")
